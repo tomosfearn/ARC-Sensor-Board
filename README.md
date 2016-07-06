@@ -2,6 +2,6 @@
 
 Sensor Board Arduino Sketch
 
-Collaborators
-lionspaws
-tomosfearn
+Collaborators:<br>
+lionspaws<br>
+tomosfearn<br>
