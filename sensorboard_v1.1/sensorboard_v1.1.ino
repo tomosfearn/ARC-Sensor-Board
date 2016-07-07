@@ -53,23 +53,14 @@ void setup() {
 }
 
 void loop() {
-  if (DEBUG) {
-    doDebug();
-  }
-  else {
-    doDemo();
-  }
-}
-
-void doDemo() {
-
+  mainProgram();
 }
 
 
-void doDebug() {
-  Serial.println("Starting debug program...");
+void mainProgram() {
   spacer();
   lightBlocking();
+  reedSensor();
 }
 
 void lightBlocking() {
@@ -120,6 +111,132 @@ void lightBlocking() {
 
 
 
+void reedSensor() {
+  int reedActivated = digitalRead(reedPin);
+#ifdef DEBUG
+  if (DEBUG) {
+    Serial.println("Debug: Reed Module...");
+    for (int i = 10; i > 0; i--) {
+      if (reedActivated) {
+        Serial.print("Reed has been activated on ");
+        Serial.print(i);
+        Serial.println(" turn");
+        debugDelay();
+        success();
+        break;
+      }
+      else {
+        if (i == 0) {
+          fail();
+        }
+        else {
+          Serial.print(i);
+          Serial.println(" turns left");
+          debugDelay();
+        }
+      }
+    }
+  }
+#endif
+#ifdef RAW
+  if (RAW) {
+    Serial.println("RAW data from the reed module is ");
+    Serial.println(reedActivated);
+    debugDelay();
+  }
+#endif
+#ifdef DEMO
+  if (DEMO) {
+    if (reedActivated) {
+      smdLed(1);
+    }
+    if (!reedActivated) {
+      //do nothing
+    }
+  }
+#endif
+}
+
+
+void button() {
+  int buttonPressed = digitalRead(buttonPin);
+#ifdef DEBUG
+  if (DEBUG) {
+    Serial.println("Debug: Button Module...");
+    for (int i = 10; i > 0; i--) {
+      if (buttonPressed) {
+        Serial.print("Button has been pressed ");
+        Serial.print(i);
+        Serial.println(" turn");
+        debugDelay();
+        success();
+        break;
+      }
+      else {
+        if (i == 0) {
+          fail();
+        }
+        else {
+          Serial.print(i);
+          Serial.println(" turns left");
+          debugDelay();
+        }
+      }
+    }
+  }
+#endif
+#ifdef RAW
+  if (RAW) {
+    Serial.println("RAW data from the button is ");
+    Serial.println(buttonPressed);
+    debugDelay();
+  }
+#endif
+#ifdef DEMO
+  if (DEMO) {
+    if (buttonPressed) {
+      buzzerA("mary_had_a_little_lamb");
+    }
+    if (!buttonPressed) {
+      //do nothing
+    }
+  }
+#endif
+}
+
+
+
+
+void buzzerA(string song) {
+#ifdef DEBUG
+  if (DEBUG) {
+    if (song == "mary_had_a_little_lamb") {
+      for (int currentNote = 0; currentNote < sizeof(MARY_HAD_A_LITTLE_LAMB_NOTES); currentNote++) {
+        Serial.println(MARY_HAD_A_LITTLE_LAMB_NOTES[currentNote]);
+        int noteDuration = 1000 / MARY_HAD_A_LITTLE_LAMB_DURATION[currentNote];
+        tone(buzzerAPin, MARY_HAD_A_LITTLE_LAMB_NOTES[currentNote], noteDuration);
+        delay(noteDuration * 1.30);
+        noTone(8);
+      }
+    }
+  }
+#endif
+#ifdef DEMO
+  if (DEMO) {
+    if (song == "mary_had_a_little_lamb") {
+      for (int currentNote = 0; currentNote < sizeof(MARY_HAD_A_LITTLE_LAMB_NOTES); currentNote++) {
+        int noteDuration = 1000 / MARY_HAD_A_LITTLE_LAMB_DURATION[currentNote];
+        tone(buzzerAPin, MARY_HAD_A_LITTLE_LAMB_NOTES[currentNote], noteDuration);
+        delay(noteDuration * 1.30);
+        noTone(8);
+      }
+    }
+#endif
+  }
+}
+
+
+
 
 
 
@@ -132,6 +249,49 @@ void rgLed2() {
   delay(flash);
   digitalWrite(rgLedRedPin2, LOW);
   delay(flash);
+}
+
+void smdLed(int sequence) {
+#ifdef DEBUG
+  if (DEBUG == true) {
+    Serial.println("Test: SMD LED");
+    digitalWrite(smdRedPin, HIGH);
+    delay(300);
+    digitalWrite(smdRedPin, LOW);
+    digitalWrite(smdGreenPin, HIGH);
+    delay(300);
+    digitalWrite(smdGreenPin, LOW);
+    digitalWrite(smdBluePin, HIGH);
+    delay(300);
+    digitalWrite(smdBluePin, LOW);
+    //
+    analogWrite(smdRedPin, 255);
+    analogWrite(smdGreenPin, 0);
+    analogWrite(smdBluePin, 255);
+    delay(300);
+    analogWrite(smdRedPin, 0);
+    analogWrite(smdGreenPin, 0);
+    analogWrite(smdBluePin, 0);
+    Serial.print("complete");
+  }
+#endif
+#ifdef DEMO
+  if (DEMO == true) {
+    if (sequence == 1) {
+      for (int a = 0; a < 5; a++) {
+        digitalWrite(smdRedPin, HIGH);
+        delay(100);
+        digitalWrite(smdRedPin, LOW);
+        digitalWrite(smdGreenPin, HIGH);
+        delay(100);
+        digitalWrite(smdGreenPin, LOW);
+        digitalWrite(smdBluePin, HIGH);
+        delay(100);
+        digitalWrite(smdBluePin, LOW);
+      }
+    }
+  }
+#endif
 }
 
 

@@ -63,8 +63,8 @@ int micPin = 31; //microphone input
 int analogMicPin = A4; // microphone
 int buzzerBPin = 45; // active buzzer
 
-int rotaryEncoderSwitch = 38; 
-int rotaryEncoderData = 40; 
+int rotaryEncoderSwitch = 38;
+int rotaryEncoderData = 40;
 int rotaryEncoderCLK = 42; //for generating interrupts using CLK signal
 
 int infraRedTx = 30; // IR Tx
@@ -73,19 +73,19 @@ int radio_rxPin = A5; // radio Rx; A5
 int radio_txPin = 44; // radio Tx 44
 int ldrPin = A0; // LDR
 
-int heartBeatPin = A1; 
-double alpha = 0.75; 
-int period = 100; 
-double change = 0.0; 
+int heartBeatPin = A1;
+double alpha = 0.75;
+int period = 100;
+double change = 0.0;
 double minval = 0.0; // heartbeat
 
 int infraRedRx = 32; // IR Rx
 int tiltPin = 23; // tilt switch
 int miniReedPin = 24; // mini reed;
-int rgLedRedPin2 = 43; 
+int rgLedRedPin2 = 43;
 int rgLedGreenPin2 = 41; // 2-col LED
-int joyStickButtonPin = 33; 
-int joyStickY = A2; 
+int joyStickButtonPin = 33;
+int joyStickY = A2;
 int joyStickX = A3; // joystick
 int buttonPin = 35; // button
 
@@ -97,4 +97,4 @@ int val4 = 0;
 int testDuration = 500;
 int testSeparation = 500;
 bool activateUltrasoundThing = false;
-int flash = 100;
+const int flash = 100;
