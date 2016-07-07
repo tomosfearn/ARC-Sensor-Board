@@ -108,7 +108,7 @@ void lightBlocking() {
 #endif
 #ifdef DEMO
   if (DEMO) {
-    while (lightBlocked) {
+    if (lightBlocked) {
       rgLed2();
     }
     if (!lightBlocked) {
@@ -131,6 +131,7 @@ void rgLed2() {
   digitalWrite(rgLedRedPin2, HIGH);
   delay(flash);
   digitalWrite(rgLedRedPin2, LOW);
+  delay(flash);
 }
 
 
