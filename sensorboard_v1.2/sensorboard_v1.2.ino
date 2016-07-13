@@ -53,7 +53,28 @@ void setup() {
 }
 
 void loop() {
-  mainProgram();
+  if(Serial.available()) {
+    #ifdef DEBUG
+    if (DEBUG) {
+      myChoise = Serial.readString();
+      if (myChoise == "light blocking") {
+        lightBlocking();
+      }
+
+      if (myChoise == "reed sensor") {
+        reedSensor();
+      }
+
+      if (myChoise == "button") {
+        button();
+      }
+
+      if (myChoise == "buzzerA") {
+        buzzerA(1);
+      }
+    }
+    #endif
+  }
 }
 
 
