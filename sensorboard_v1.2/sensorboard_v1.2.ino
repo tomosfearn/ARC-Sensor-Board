@@ -98,6 +98,7 @@ void lightBlocking() {
         Serial.println(" turn");
         debugDelay();
         success();
+        continue;
       }
       else {
         if (i == 0) {
