@@ -90,12 +90,13 @@ void mainProgram() {
   // input
 //  lightBlocking();
 //  reedSensor();
+  ultrasonic();
 //  irBlocking();
 //  microphone();
 //  itTxRxSensors();
 //  touchSensor();
 //  ldr();
-  heartbeat();
+//  heartbeat();
 //  ballSwitch();
 //  miniReedSensor();
 //  button();
@@ -104,7 +105,7 @@ void mainProgram() {
 //  buzzerA(1);
 }
 
-// temp and humidity
+// temp and humidity - need to work out how to represent data
 
 void lightBlocking() {
   int lightBlocked = digitalRead(lightBlockingPin);
@@ -180,8 +181,6 @@ void buzzerA(int song) {
   }
 }
 
-// RGB LED
-
 void reedSensor() {
   int reedActivated = digitalRead(reedPin);
   #ifdef DEBUG
@@ -227,9 +226,61 @@ void reedSensor() {
   #endif
 }
 
-// 7 col flash
-// SMD
-// ultrasonic
+void ultrasonic() {
+  // trigger ping
+  digitalWrite(ultrasonicTriggerPin, HIGH);
+  delay(10);
+  digitalWrite(ultrasonicTriggerPin, LOW);
+  // read echo
+  long ultrasonicRead = pulseIn(ultrasonicEchoPin, HIGH);
+  // The speed of sound is 340 m/s or 29 microseconds per centimeter.
+  // The ping travels out and back, so to find the distance of the
+  // object we take half of the distance travelled.
+  long distance = (ultrasonicRead/29)/2;
+  
+  #ifdef DEBUG
+    if (DEBUG) {
+      Serial.println("Debug: Ultrasonic Module...");
+      for (int i = 10; i > 0; i--) {
+        if (ultrasonicRead) {
+          Serial.print("Ultrasonic Sensor is receiving data on ");
+          Serial.print(i);
+          Serial.println(" turn");
+          debugDelay();
+          success();
+          continue;
+        }
+        else {
+          if (i == 0) {
+            fail();
+          }
+          else {
+            Serial.print(i);
+            Serial.println(" turns left");
+            debugDelay();
+          }
+        }
+      }
+    }
+  #endif
+  #ifdef RAW
+    if (RAW) {
+      Serial.println("RAW data from ultrasonic module is ");
+      Serial.println(ultrasonicRead);
+      debugDelay();
+    }
+  #endif
+  #ifdef DEMO
+    if (DEMO) {
+      if (distance < 100) {
+        rgLed2();
+      }
+      if (distance > 100) {
+        //do nothing
+      }
+    }
+  #endif
+}
 
 void irBlocking() {
   int irBlocked = digitalRead(blockingPin);
@@ -277,8 +328,6 @@ void irBlocking() {
   #endif
 }
 
-// 2col led
-
 void microphone() {
   int micTapped = digitalRead(micPin);
   #ifdef DEBUG
@@ -325,7 +374,6 @@ void microphone() {
   #endif
 }
 
-// buzzer b
 // rotary encoder
 
 void itTxRxSensors() {
@@ -608,7 +656,6 @@ void miniReedSensor() {
   #endif
 }
 
-// 2 col
 // joystick
 
 void button() {
