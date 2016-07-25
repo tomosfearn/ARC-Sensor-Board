@@ -92,7 +92,8 @@ void mainProgram() {
 //  reedSensor();
 //  irBlocking();
 //  touchSensor();
-  ballSwitch();
+//  ballSwitch();
+  miniReedSensor();
 //  button();
 
   // output
@@ -329,7 +330,7 @@ void touchSensor() {
 // ldr
 // heartbeat
 // ir rx
-// ball
+
 void ballSwitch() {
   int ballRead = digitalRead(tiltPin);
   #ifdef DEBUG
@@ -377,6 +378,52 @@ void ballSwitch() {
 }
 
 // mini reed
+
+void miniReedSensor() {
+  int reedActivated = digitalRead(miniReedPin);
+  #ifdef DEBUG
+    if (DEBUG) {
+      Serial.println("Debug: Mini Reed Module...");
+      for (int i = 10; i > 0; i--) {
+        if (reedActivated) {
+          Serial.print("Mini Reed has been activated on ");
+          Serial.print(i);
+          Serial.println(" turn");
+          debugDelay();
+          success();
+        }
+        else {
+          if (i == 0) {
+            fail();
+          }
+          else {
+            Serial.print(i);
+            Serial.println(" turns left");
+            debugDelay();
+          }
+        }
+      }
+    }
+  #endif
+  #ifdef RAW
+    if (RAW) {
+      Serial.println("RAW data from the mini reed module is ");
+      Serial.println(reedActivated);
+      debugDelay();
+    }
+  #endif
+  #ifdef DEMO
+    if (DEMO) {
+      if (reedActivated) {
+        smdLed(1);
+      }
+      if (!reedActivated) {
+        //do nothing
+      }
+    }
+  #endif
+}
+
 // 2 col
 // joystick
 
