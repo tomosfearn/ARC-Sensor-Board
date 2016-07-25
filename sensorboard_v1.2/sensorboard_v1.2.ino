@@ -88,13 +88,14 @@ void mainProgram() {
   spacer();
 
   // input
-  lightBlocking();
-  reedSensor();
-  irBlocking();
-  button();
+//  lightBlocking();
+//  reedSensor();
+//  irBlocking();
+  touchSensor();
+//  button();
 
   // output
-  buzzerA(1);
+//  buzzerA(1);
 }
 
 // temp and humidity
@@ -224,7 +225,6 @@ void reedSensor() {
 // SMD
 // ultrasonic
 
-// IR blocking
 void irBlocking() {
   int irBlocked = digitalRead(blockingPin);
   #ifdef DEBUG
@@ -276,7 +276,53 @@ void irBlocking() {
 // buzzer b
 // rotary encoder
 // ir tx
-// touch
+
+void touchSensor() {
+  int touchRead = digitalRead(touchPin);
+  #ifdef DEBUG
+    if (DEBUG) {
+      Serial.println("Debug: Touch Module...");
+      for (int i = 10; i > 0; i--) {
+        if (touchRead) {
+          Serial.print("Touch Sensor has been touched on ");
+          Serial.print(i);
+          Serial.println(" turn");
+          debugDelay();
+          success();
+          continue;
+        }
+        else {
+          if (i == 0) {
+            fail();
+          }
+          else {
+            Serial.print(i);
+            Serial.println(" turns left");
+            debugDelay();
+          }
+        }
+      }
+    }
+  #endif
+  #ifdef RAW
+    if (RAW) {
+      Serial.println("RAW data from touch module is ");
+      Serial.println(touchRead);
+      debugDelay();
+    }
+  #endif
+  #ifdef DEMO
+    if (DEMO) {
+      if (touchRead) {
+        rgLed2();
+      }
+      if (!touchRead) {
+        //do nothing
+      }
+    }
+  #endif
+}
+
 // radio rx
 // radio tx
 // ldr
