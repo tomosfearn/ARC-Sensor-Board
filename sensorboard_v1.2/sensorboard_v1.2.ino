@@ -91,9 +91,10 @@ void mainProgram() {
 //  lightBlocking();
 //  reedSensor();
 //  irBlocking();
-  microphone();
+//  microphone();
 //  itTxRxSensors();
 //  touchSensor();
+  ldr();
 //  ballSwitch();
 //  miniReedSensor();
 //  button();
@@ -422,7 +423,54 @@ void touchSensor() {
 
 // radio rx
 // radio tx
-// ldr
+
+void ldr() {
+  int ldrRead = analogRead(ldrPin);
+  #ifdef DEBUG
+    if (DEBUG) {
+      Serial.println("Debug: LDR Module...");
+      for (int i = 10; i > 0; i--) {
+        if (ldrRead) {
+          Serial.print("LDR Sensor is receiving data on ");
+          Serial.print(i);
+          Serial.println(" turn");
+          debugDelay();
+          success();
+          continue;
+        }
+        else {
+          if (i == 0) {
+            fail();
+          }
+          else {
+            Serial.print(i);
+            Serial.println(" turns left");
+            debugDelay();
+          }
+        }
+      }
+    }
+  #endif
+  #ifdef RAW
+    if (RAW) {
+      Serial.println("RAW data from ldr module is ");
+      Serial.println(ldrRead);
+      debugDelay();
+    }
+  #endif
+  #ifdef DEMO
+    if (DEMO) {
+      if (ldrRead) {
+        rgLed2();
+      }
+      if (!ldrRead) {
+        //do nothing
+      }
+    }
+  #endif
+}
+
+
 // heartbeat
 
 void ballSwitch() {
