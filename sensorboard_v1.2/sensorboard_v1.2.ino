@@ -91,10 +91,11 @@ void mainProgram() {
 //  lightBlocking();
 //  reedSensor();
 //  irBlocking();
+  microphone();
+//  itTxRxSensors();
 //  touchSensor();
 //  ballSwitch();
 //  miniReedSensor();
-  itTxRxSensors();
 //  button();
 
   // output
@@ -275,7 +276,53 @@ void irBlocking() {
 }
 
 // 2col led
-// mic
+
+void microphone() {
+  int micTapped = digitalRead(micPin);
+  #ifdef DEBUG
+    if (DEBUG) {
+      Serial.println("Debug: Microphone Module...");
+      for (int i = 10; i > 0; i--) {
+        if (micTapped) {
+          Serial.print("Microphone has been tapped on ");
+          Serial.print(i);
+          Serial.println(" turn");
+          debugDelay();
+          success();
+          continue;
+        }
+        else {
+          if (i == 0) {
+            fail();
+          }
+          else {
+            Serial.print(i);
+            Serial.println(" turns left");
+            debugDelay();
+          }
+        }
+      }
+    }
+  #endif
+  #ifdef RAW
+    if (RAW) {
+      Serial.println("RAW data from microphone module is ");
+      Serial.println(micTapped);
+      debugDelay();
+    }
+  #endif
+  #ifdef DEMO
+    if (DEMO) {
+      if (micTapped) {
+        rgLed2();
+      }
+      if (!micTapped) {
+        //do nothing
+      }
+    }
+  #endif
+}
+
 // buzzer b
 // rotary encoder
 
