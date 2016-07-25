@@ -91,7 +91,8 @@ void mainProgram() {
 //  lightBlocking();
 //  reedSensor();
 //  irBlocking();
-  touchSensor();
+//  touchSensor();
+  ballSwitch();
 //  button();
 
   // output
@@ -329,6 +330,52 @@ void touchSensor() {
 // heartbeat
 // ir rx
 // ball
+void ballSwitch() {
+  int ballRead = digitalRead(tiltPin);
+  #ifdef DEBUG
+    if (DEBUG) {
+      Serial.println("Debug: Ball Switch Module...");
+      for (int i = 10; i > 0; i--) {
+        if (ballRead) {
+          Serial.print("Ball Switch has been tilted on ");
+          Serial.print(i);
+          Serial.println(" turn");
+          debugDelay();
+          success();
+          continue;
+        }
+        else {
+          if (i == 0) {
+            fail();
+          }
+          else {
+            Serial.print(i);
+            Serial.println(" turns left");
+            debugDelay();
+          }
+        }
+      }
+    }
+  #endif
+  #ifdef RAW
+    if (RAW) {
+      Serial.println("RAW data from ball switch module is ");
+      Serial.println(ballRead);
+      debugDelay();
+    }
+  #endif
+  #ifdef DEMO
+    if (DEMO) {
+      if (ballRead) {
+        rgLed2();
+      }
+      if (!ballRead) {
+        //do nothing
+      }
+    }
+  #endif
+}
+
 // mini reed
 // 2 col
 // joystick
