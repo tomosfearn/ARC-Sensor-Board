@@ -19,7 +19,7 @@ void setup() {
   pinMode(micPin, INPUT); //microphone input
   pinMode(analogMicPin, INPUT); //analog microphone pin
   pinMode(rotaryEncoderSwitch, INPUT); //rotary encoder switch
-  pinMode(rotaryEncoderData, INPUT); //rotary encoder input data
+  pinMode(rotaryEncoderData, INPUT_PULLUP); //rotary encoder input data
   pinMode(rotaryEncoderCLK, INPUT_PULLUP); //rotary encoder interrupt data
   pinMode(touchPin, INPUT_PULLUP); //touch sensor
   pinMode(radio_rxPin, INPUT); //radio receiver pin
@@ -85,7 +85,7 @@ void loop() {
 
 
 void mainProgram() {
-  spacer();
+//  spacer();
 
   // input
 //  lightBlocking();
@@ -93,13 +93,14 @@ void mainProgram() {
 //  ultrasonic();
 //  irBlocking();
 //  microphone();
+  rotaryEncoder();
 //  itTxRxSensors();
 //  touchSensor();
 //  ldr();
 //  heartbeat();
 //  ballSwitch();
 //  miniReedSensor();
-  joystick();
+//  joystick();
 //  button();
 
   // output
@@ -375,7 +376,63 @@ void microphone() {
   #endif
 }
 
-// rotary encoder
+void rotaryEncoder() {
+  long rotaryEncoderDataRead = digitalRead(rotaryEncoderData);
+  long rotaryEncoderCLKRead = digitalRead(rotaryEncoderCLK);
+  int rotaryEncoderSwitchRead = digitalRead(rotaryEncoderSwitch);
+  int clkLast = rotaryEncoderCLKRead;
+  #ifdef DEBUG
+    if (DEBUG) {
+      Serial.println("Debug: Rotary Encoder Module...");
+      for (int i = 10; i > 0; i--) {
+        if (rotaryEncoderData) {
+          Serial.print("Rotary Encoder is receiving data on ");
+          Serial.print(i);
+          Serial.println(" turn");
+          debugDelay();
+          success();
+          continue;
+        }
+        else {
+          if (i == 0) {
+            fail();
+          }
+          else {
+            Serial.print(i);
+            Serial.println(" turns left");
+            debugDelay();
+          }
+        }
+      }
+    }
+  #endif
+  #ifdef RAW
+    if (RAW) {
+      Serial.println("RAW data from rotary encoder is ");
+      Serial.print("Data: ");
+      Serial.print(rotaryEncoderDataRead);
+      Serial.print(", CLK: ");
+      Serial.print(rotaryEncoderCLKRead);
+      Serial.print(", button: ");
+      Serial.println(rotaryEncoderSwitchRead);
+      debugDelay();
+    }
+  #endif
+  #ifdef DEMO
+    if (DEMO) {
+      rotaryEncoderCLKRead = digitalRead(rotaryEncoderCLK);
+      if (rotaryEncoderCLKRead != clkLast && rotaryEncoderCLKRead == LOW) {
+        if (digitalRead(rotaryEncoderDataRead) != rotaryEncoderCLKRead) {
+          Serial.println ("clockwise");
+        }
+        else {
+          Serial.println("counterclockwise");
+        }
+     } 
+     clkLast = rotaryEncoderCLKRead;
+   }
+  #endif
+}
 
 void itTxRxSensors() {
   digitalWrite(infraRedTx, HIGH); // turn on the transmitter
