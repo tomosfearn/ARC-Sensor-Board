@@ -1,6 +1,6 @@
 
-#define DEBUG true
-#define RAW false
+#define DEBUG false
+#define RAW true
 #define DEMO false
 
 #include "variables.h";
@@ -75,6 +75,12 @@ void loop() {
     }
     #endif
   }
+  #ifdef RAW
+  mainProgram();
+  #endif
+  #ifdef DEMO
+  mainProgram();
+  #endif
 }
 
 
@@ -85,6 +91,8 @@ void mainProgram() {
   button();
   buzzerA(1);
 }
+
+// temp and humidity would be here
 
 void lightBlocking() {
   int lightBlocked = digitalRead(lightBlockingPin);
@@ -132,7 +140,35 @@ void lightBlocking() {
 #endif
 }
 
+void buzzerA(int song) {
+#ifdef DEBUG
+  if (DEBUG) {
+    if (song == 1) {
+      for (int currentNote = 0; currentNote < sizeof(MARY_HAD_A_LITTLE_LAMB_NOTES); currentNote++) {
+        Serial.println(MARY_HAD_A_LITTLE_LAMB_NOTES[currentNote]);
+        int noteDuration = 1000 / MARY_HAD_A_LITTLE_LAMB_DURATION[currentNote];
+        tone(buzzerAPin, MARY_HAD_A_LITTLE_LAMB_NOTES[currentNote], noteDuration);
+        delay(noteDuration * 1.30);
+        noTone(8);
+      }
+    }
+  }
+#endif
+#ifdef DEMO
+  if (DEMO) {
+    if (song == 1) {
+      for (int currentNote = 0; currentNote < sizeof(MARY_HAD_A_LITTLE_LAMB_NOTES); currentNote++) {
+        int noteDuration = 1000 / MARY_HAD_A_LITTLE_LAMB_DURATION[currentNote];
+        tone(buzzerAPin, MARY_HAD_A_LITTLE_LAMB_NOTES[currentNote], noteDuration);
+        delay(noteDuration * 1.30);
+        noTone(8);
+      }
+    }
+#endif
+  }
+}
 
+// RGB LED would be here
 
 void reedSensor() {
   int reedActivated = digitalRead(reedPin);
@@ -179,6 +215,27 @@ void reedSensor() {
 #endif
 }
 
+// 7 col flash would be here
+
+// SMD would be here
+
+// ultrasonic would be here
+// IR blocking would be here
+// 2col led would be here
+// mic
+// buzzer b
+// rotary encoder
+// ir tx
+// touch
+// radio rx
+// radio tx
+// ldr
+// heartbeat
+// ir rx
+// ball
+// mini reed
+// 2 col
+// joystick
 
 void button() {
   int buttonPressed = digitalRead(buttonPin);
@@ -224,41 +281,6 @@ void button() {
   }
 #endif
 }
-
-
-
-
-void buzzerA(int song) {
-#ifdef DEBUG
-  if (DEBUG) {
-    if (song == 1) {
-      for (int currentNote = 0; currentNote < sizeof(MARY_HAD_A_LITTLE_LAMB_NOTES); currentNote++) {
-        Serial.println(MARY_HAD_A_LITTLE_LAMB_NOTES[currentNote]);
-        int noteDuration = 1000 / MARY_HAD_A_LITTLE_LAMB_DURATION[currentNote];
-        tone(buzzerAPin, MARY_HAD_A_LITTLE_LAMB_NOTES[currentNote], noteDuration);
-        delay(noteDuration * 1.30);
-        noTone(8);
-      }
-    }
-  }
-#endif
-#ifdef DEMO
-  if (DEMO) {
-    if (song == 1) {
-      for (int currentNote = 0; currentNote < sizeof(MARY_HAD_A_LITTLE_LAMB_NOTES); currentNote++) {
-        int noteDuration = 1000 / MARY_HAD_A_LITTLE_LAMB_DURATION[currentNote];
-        tone(buzzerAPin, MARY_HAD_A_LITTLE_LAMB_NOTES[currentNote], noteDuration);
-        delay(noteDuration * 1.30);
-        noTone(8);
-      }
-    }
-#endif
-  }
-}
-
-
-
-
 
 
 //shortcut hardware
@@ -314,11 +336,6 @@ void smdLed(int sequence) {
   }
 #endif
 }
-
-
-
-
-
 
 //shortcut methods
 void spacer() {
