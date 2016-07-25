@@ -55,173 +55,223 @@ void setup() {
 void loop() {
   if(Serial.available()) {
     #ifdef DEBUG
-    if (DEBUG) {
-      myChoise = Serial.readString();
-      if (myChoise == "light blocking") {
-        lightBlocking();
+      if (DEBUG) {
+        myChoise = Serial.readString();
+        if (myChoise == "light blocking") {
+          lightBlocking();
+        }
+  
+        if (myChoise == "reed sensor") {
+          reedSensor();
+        }
+  
+        if (myChoise == "button") {
+          button();
+        }
+  
+        if (myChoise == "buzzerA") {
+          buzzerA(1);
+        }
       }
-
-      if (myChoise == "reed sensor") {
-        reedSensor();
-      }
-
-      if (myChoise == "button") {
-        button();
-      }
-
-      if (myChoise == "buzzerA") {
-        buzzerA(1);
-      }
-    }
     #endif
   }
   #ifdef RAW
-  mainProgram();
+    mainProgram();
   #endif
   #ifdef DEMO
-  mainProgram();
+    mainProgram();
   #endif
 }
 
 
 void mainProgram() {
   spacer();
+
+  // input
   lightBlocking();
   reedSensor();
+  irBlocking();
   button();
+
+  // output
   buzzerA(1);
 }
 
-// temp and humidity would be here
+// temp and humidity
 
 void lightBlocking() {
   int lightBlocked = digitalRead(lightBlockingPin);
-#ifdef DEBUG
-  if (DEBUG) {
-    Serial.println("Debug: Light Blocking Module...");
-    for (int i = 10; i > 0; i--) {
-      if (lightBlocked) {
-        Serial.print("Light has been blocked on ");
-        Serial.print(i);
-        Serial.println(" turn");
-        debugDelay();
-        success();
-        continue;
-      }
-      else {
-        if (i == 0) {
-          fail();
+  #ifdef DEBUG
+    if (DEBUG) {
+      Serial.println("Debug: Light Blocking Module...");
+      for (int i = 10; i > 0; i--) {
+        if (lightBlocked) {
+          Serial.print("Light has been blocked on ");
+          Serial.print(i);
+          Serial.println(" turn");
+          debugDelay();
+          success();
+          continue;
         }
         else {
-          Serial.print(i);
-          Serial.println(" turns left");
-          debugDelay();
+          if (i == 0) {
+            fail();
+          }
+          else {
+            Serial.print(i);
+            Serial.println(" turns left");
+            debugDelay();
+          }
         }
       }
     }
-  }
-#endif
-#ifdef RAW
-  if (RAW) {
-    Serial.println("RAW data from light blocking module is ");
-    Serial.println(lightBlocked);
-    debugDelay();
-  }
-#endif
-#ifdef DEMO
-  if (DEMO) {
-    if (lightBlocked) {
-      rgLed2();
+  #endif
+  #ifdef RAW
+    if (RAW) {
+      Serial.println("RAW data from light blocking module is ");
+      Serial.println(lightBlocked);
+      debugDelay();
     }
-    if (!lightBlocked) {
-      //do nothing
+  #endif
+  #ifdef DEMO
+    if (DEMO) {
+      if (lightBlocked) {
+        rgLed2();
+      }
+      if (!lightBlocked) {
+        //do nothing
+      }
     }
-  }
-#endif
+  #endif
 }
-
+  
 void buzzerA(int song) {
-#ifdef DEBUG
-  if (DEBUG) {
-    if (song == 1) {
-      for (int currentNote = 0; currentNote < sizeof(MARY_HAD_A_LITTLE_LAMB_NOTES); currentNote++) {
-        Serial.println(MARY_HAD_A_LITTLE_LAMB_NOTES[currentNote]);
-        int noteDuration = 1000 / MARY_HAD_A_LITTLE_LAMB_DURATION[currentNote];
-        tone(buzzerAPin, MARY_HAD_A_LITTLE_LAMB_NOTES[currentNote], noteDuration);
-        delay(noteDuration * 1.30);
-        noTone(8);
+  #ifdef DEBUG
+    if (DEBUG) {
+      if (song == 1) {
+        for (int currentNote = 0; currentNote < sizeof(MARY_HAD_A_LITTLE_LAMB_NOTES); currentNote++) {
+          Serial.println(MARY_HAD_A_LITTLE_LAMB_NOTES[currentNote]);
+          int noteDuration = 1000 / MARY_HAD_A_LITTLE_LAMB_DURATION[currentNote];
+          tone(buzzerAPin, MARY_HAD_A_LITTLE_LAMB_NOTES[currentNote], noteDuration);
+          delay(noteDuration * 1.30);
+          noTone(8);
+        }
       }
     }
-  }
-#endif
-#ifdef DEMO
-  if (DEMO) {
-    if (song == 1) {
-      for (int currentNote = 0; currentNote < sizeof(MARY_HAD_A_LITTLE_LAMB_NOTES); currentNote++) {
-        int noteDuration = 1000 / MARY_HAD_A_LITTLE_LAMB_DURATION[currentNote];
-        tone(buzzerAPin, MARY_HAD_A_LITTLE_LAMB_NOTES[currentNote], noteDuration);
-        delay(noteDuration * 1.30);
-        noTone(8);
+  #endif
+  #ifdef DEMO
+    if (DEMO) {
+      if (song == 1) {
+        for (int currentNote = 0; currentNote < sizeof(MARY_HAD_A_LITTLE_LAMB_NOTES); currentNote++) {
+          int noteDuration = 1000 / MARY_HAD_A_LITTLE_LAMB_DURATION[currentNote];
+          tone(buzzerAPin, MARY_HAD_A_LITTLE_LAMB_NOTES[currentNote], noteDuration);
+          delay(noteDuration * 1.30);
+          noTone(8);
+        }
       }
-    }
-#endif
+  #endif
   }
 }
 
-// RGB LED would be here
+// RGB LED
 
 void reedSensor() {
   int reedActivated = digitalRead(reedPin);
-#ifdef DEBUG
-  if (DEBUG) {
-    Serial.println("Debug: Reed Module...");
-    for (int i = 10; i > 0; i--) {
-      if (reedActivated) {
-        Serial.print("Reed has been activated on ");
-        Serial.print(i);
-        Serial.println(" turn");
-        debugDelay();
-        success();
-      }
-      else {
-        if (i == 0) {
-          fail();
+  #ifdef DEBUG
+    if (DEBUG) {
+      Serial.println("Debug: Reed Module...");
+      for (int i = 10; i > 0; i--) {
+        if (reedActivated) {
+          Serial.print("Reed has been activated on ");
+          Serial.print(i);
+          Serial.println(" turn");
+          debugDelay();
+          success();
         }
         else {
-          Serial.print(i);
-          Serial.println(" turns left");
-          debugDelay();
+          if (i == 0) {
+            fail();
+          }
+          else {
+            Serial.print(i);
+            Serial.println(" turns left");
+            debugDelay();
+          }
         }
       }
     }
-  }
-#endif
-#ifdef RAW
-  if (RAW) {
-    Serial.println("RAW data from the reed module is ");
-    Serial.println(reedActivated);
-    debugDelay();
-  }
-#endif
-#ifdef DEMO
-  if (DEMO) {
-    if (reedActivated) {
-      smdLed(1);
+  #endif
+  #ifdef RAW
+    if (RAW) {
+      Serial.println("RAW data from the reed module is ");
+      Serial.println(reedActivated);
+      debugDelay();
     }
-    if (!reedActivated) {
-      //do nothing
+  #endif
+  #ifdef DEMO
+    if (DEMO) {
+      if (reedActivated) {
+        smdLed(1);
+      }
+      if (!reedActivated) {
+        //do nothing
+      }
     }
-  }
-#endif
+  #endif
 }
 
-// 7 col flash would be here
+// 7 col flash
+// SMD
+// ultrasonic
 
-// SMD would be here
+// IR blocking
+void irBlocking() {
+  int irBlocked = digitalRead(blockingPin);
+  #ifdef DEBUG
+    if (DEBUG) {
+      Serial.println("Debug: IR Blocking Module...");
+      for (int i = 10; i > 0; i--) {
+        if (irBlocked) {
+          Serial.print("IR has been blocked on ");
+          Serial.print(i);
+          Serial.println(" turn");
+          debugDelay();
+          success();
+          continue;
+        }
+        else {
+          if (i == 0) {
+            fail();
+          }
+          else {
+            Serial.print(i);
+            Serial.println(" turns left");
+            debugDelay();
+          }
+        }
+      }
+    }
+  #endif
+  #ifdef RAW
+    if (RAW) {
+      Serial.println("RAW data from IR blocking module is ");
+      Serial.println(irBlocked);
+      debugDelay();
+    }
+  #endif
+  #ifdef DEMO
+    if (DEMO) {
+      if (irBlocked) {
+        rgLed2();
+      }
+      if (!irBlocked) {
+        //do nothing
+      }
+    }
+  #endif
+}
 
-// ultrasonic would be here
-// IR blocking would be here
-// 2col led would be here
+// 2col led
 // mic
 // buzzer b
 // rotary encoder
