@@ -90,7 +90,7 @@ void mainProgram() {
   // input
 //  lightBlocking();
 //  reedSensor();
-  ultrasonic();
+//  ultrasonic();
 //  irBlocking();
 //  microphone();
 //  itTxRxSensors();
@@ -99,6 +99,7 @@ void mainProgram() {
 //  heartbeat();
 //  ballSwitch();
 //  miniReedSensor();
+  joystick();
 //  button();
 
   // output
@@ -656,7 +657,75 @@ void miniReedSensor() {
   #endif
 }
 
-// joystick
+void joystick() {
+  long joyStickXRead = analogRead(joyStickX);
+  long joyStickYRead = analogRead(joyStickY);
+  int joyStickButtonRead = digitalRead(joyStickButtonPin);
+  
+  #ifdef DEBUG
+    if (DEBUG) {
+      Serial.println("Debug: Joystick Module...");
+      for (int i = 10; i > 0; i--) {
+        if (joyStickXRead) {
+          Serial.print("Joystick is receiving X data on ");
+          Serial.print(i);
+          Serial.println(" turn");
+          debugDelay();
+          success();
+          continue;
+        }
+        if (joyStickYRead) {
+          Serial.print("Joystick is receiving Y data on ");
+          Serial.print(i);
+          Serial.println(" turn");
+          debugDelay();
+          success();
+          continue;
+        }
+        if (joyStickButtonRead) {
+          Serial.print("Joystick button being pressed on ");
+          Serial.print(i);
+          Serial.println(" turn");
+          debugDelay();
+          success();
+          continue;
+        }
+        else {
+          if (i == 0) {
+            fail();
+          }
+          else {
+            Serial.print(i);
+            Serial.println(" turns left");
+            debugDelay();
+          }
+        }
+      }
+    }
+  #endif
+  #ifdef RAW
+    if (RAW) {
+      Serial.println("RAW data from joystick is ");
+      Serial.print("X: ");
+      Serial.print(joyStickXRead);
+      Serial.print(", Y: ");
+      Serial.print(joyStickYRead);
+      Serial.print(", button: ");
+      Serial.println(joyStickButtonRead);
+      debugDelay();
+    }
+  #endif
+  #ifdef DEMO
+    if (DEMO) {
+      if (joyStickButtonRead) {
+        rgLed2();
+      }
+      if (!joyStickButtonRead) {
+        //do nothing
+      }
+    }
+  #endif
+}
 
 void button() {
   int buttonPressed = digitalRead(buttonPin);
