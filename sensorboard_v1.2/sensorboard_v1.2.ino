@@ -25,7 +25,7 @@ void setup() {
   pinMode(radio_rxPin, INPUT); //radio receiver pin
   pinMode(ldrPin, INPUT); //light sensor
   pinMode(heartBeatPin, INPUT); //heart beat sensor
-  pinMode(infraRedRx, INPUT); //infra red receiver
+  pinMode(infraRedRx, INPUT_PULLUP); //infra red receiver
   pinMode(tiltPin, INPUT_PULLUP); //tilt module
   pinMode(miniReedPin, INPUT); //mini reed module
   pinMode(joyStickButtonPin, INPUT_PULLUP);
@@ -93,7 +93,8 @@ void mainProgram() {
 //  irBlocking();
 //  touchSensor();
 //  ballSwitch();
-  miniReedSensor();
+//  miniReedSensor();
+  itTxRxSensors();
 //  button();
 
   // output
@@ -277,7 +278,54 @@ void irBlocking() {
 // mic
 // buzzer b
 // rotary encoder
-// ir tx
+
+void itTxRxSensors() {
+  digitalWrite(infraRedTx, HIGH); // turn on the transmitter
+  
+  int irReceiver = digitalRead(infraRedRx);
+  #ifdef DEBUG
+    if (DEBUG) {
+      Serial.println("Debug: IR Receiver Module...");
+      for (int i = 10; i > 0; i--) {
+        if (irReceiver) {
+          Serial.print("IR has been blocked on ");
+          Serial.print(i);
+          Serial.println(" turn");
+          debugDelay();
+          success();
+          continue;
+        }
+        else {
+          if (i == 0) {
+            fail();
+          }
+          else {
+            Serial.print(i);
+            Serial.println(" turns left");
+            debugDelay();
+          }
+        }
+      }
+    }
+  #endif
+  #ifdef RAW
+    if (RAW) {
+      Serial.println("RAW data from IR receiver module is ");
+      Serial.println(irReceiver);
+      debugDelay();
+    }
+  #endif
+  #ifdef DEMO
+    if (DEMO) {
+      if (irReceiver) {
+        rgLed2();
+      }
+      if (!irReceiver) {
+        //do nothing
+      }
+    }
+  #endif
+}
 
 void touchSensor() {
   int touchRead = digitalRead(touchPin);
@@ -329,7 +377,6 @@ void touchSensor() {
 // radio tx
 // ldr
 // heartbeat
-// ir rx
 
 void ballSwitch() {
   int ballRead = digitalRead(tiltPin);
@@ -376,8 +423,6 @@ void ballSwitch() {
     }
   #endif
 }
-
-// mini reed
 
 void miniReedSensor() {
   int reedActivated = digitalRead(miniReedPin);
