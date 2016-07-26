@@ -1,11 +1,9 @@
-
 #define DEBUG false
 #define RAW true
 #define DEMO false
 
 #include "variables.h";
 #include "pitches.h";
-
 
 void setup() {
   Serial.begin(9600);
@@ -93,9 +91,10 @@ void mainProgram() {
 //  ultrasonic();
 //  irBlocking();
 //  microphone();
-  rotaryEncoder();
+//  rotaryEncoder();
 //  itTxRxSensors();
 //  touchSensor();
+//  radio();
 //  ldr();
 //  heartbeat();
 //  ballSwitch();
@@ -528,8 +527,31 @@ void touchSensor() {
   #endif
 }
 
-// radio rx
 // radio tx
+// radio rx
+void radio() {
+  const unsigned int upperThreshold = 50;  //upper threshold value
+  const unsigned int lowerThreshold = 40;  //lower threshold value
+  unsigned int data = 0;
+
+  delay(500);
+  digitalWrite(radio_txPin, LOW);
+  
+  data = analogRead(radio_rxPin);
+  Serial.println(data);
+  
+  if(data>upperThreshold){
+     // If a LOW signal is received, turn LED OFF
+     digitalWrite(rgLedRedPin, LOW);
+     //Serial.println("low");
+   }
+   
+   if(data<lowerThreshold){
+     //If a HIGH signal is received, turn LED ON
+     digitalWrite(rgLedRedPin, HIGH);
+     //Serial.println("high");
+   }
+}
 
 void ldr() {
   int ldrRead = analogRead(ldrPin);
