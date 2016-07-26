@@ -66,6 +66,8 @@ int buzzerBPin = 45; // active buzzer
 int rotaryEncoderSwitch = 38;
 int rotaryEncoderData = 40;
 int rotaryEncoderCLK = 42; //for generating interrupts using CLK signal
+long rotaryEncoderCLKReadLast = digitalRead(rotaryEncoderCLK);
+double val = 0;
 
 int infraRedTx = 30; // IR Tx
 int touchPin = 25; // touch
@@ -73,6 +75,7 @@ int radio_rxPin = A5; // radio Rx; A5
 int radio_txPin = 44; // radio Tx 44
 int ldrPin = A0; // LDR
 
+// heartbeat
 int heartBeatPin = A1;
 double alpha = 0.75;
 int period = 100;

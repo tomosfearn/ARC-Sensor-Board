@@ -106,3 +106,14 @@ const int MARY_HAD_A_LITTLE_LAMB_DURATION[] = {
   4, 4, 4, 4, 4, 4, 4,
   4, 4, 4, 4, 4, 2
 };
+
+
+const int C_ARPEGGIO_NOTES[] = {
+  NOTE_C5, NOTE_E5, NOTE_G5, NOTE_C6,
+  NOTE_G5, NOTE_E5, NOTE_C5
+};
+
+const int C_ARPEGGIO_DURATION[] = {
+  4, 4, 4, 4,
+  4, 4, 2
+};

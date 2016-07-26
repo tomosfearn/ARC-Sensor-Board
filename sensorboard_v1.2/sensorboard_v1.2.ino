@@ -1,6 +1,6 @@
 #define DEBUG false
-#define RAW true
-#define DEMO false
+#define RAW false
+#define DEMO true
 
 #include "variables.h";
 #include "pitches.h";
@@ -16,9 +16,9 @@ void setup() {
   pinMode(blockingPin, INPUT); //blocking module
   pinMode(micPin, INPUT); //microphone input
   pinMode(analogMicPin, INPUT); //analog microphone pin
-  pinMode(rotaryEncoderSwitch, INPUT); //rotary encoder switch
-  pinMode(rotaryEncoderData, INPUT_PULLUP); //rotary encoder input data
-  pinMode(rotaryEncoderCLK, INPUT_PULLUP); //rotary encoder interrupt data
+  pinMode(rotaryEncoderSwitch, INPUT_PULLUP); //rotary encoder switch
+  pinMode(rotaryEncoderData, INPUT); //rotary encoder input data
+  pinMode(rotaryEncoderCLK, INPUT); //rotary encoder interrupt data
   pinMode(touchPin, INPUT_PULLUP); //touch sensor
   pinMode(radio_rxPin, INPUT); //radio receiver pin
   pinMode(ldrPin, INPUT); //light sensor
@@ -86,14 +86,14 @@ void mainProgram() {
 //  spacer();
 
   // input
-//  lightBlocking();
+  //  lightBlocking();
 //  reedSensor();
 //  ultrasonic();
 //  irBlocking();
 //  microphone();
-//  rotaryEncoder();
+  rotaryEncoder();
 //  itTxRxSensors();
-//  touchSensor();
+  //  touchSensor();
 //  radio();
 //  ldr();
 //  heartbeat();
@@ -145,7 +145,7 @@ void lightBlocking() {
   #ifdef DEMO
     if (DEMO) {
       if (lightBlocked) {
-        rgLed2();
+        buzzerA(2);
       }
       if (!lightBlocked) {
         //do nothing
@@ -174,6 +174,14 @@ void buzzerA(int song) {
         for (int currentNote = 0; currentNote < sizeof(MARY_HAD_A_LITTLE_LAMB_NOTES); currentNote++) {
           int noteDuration = 1000 / MARY_HAD_A_LITTLE_LAMB_DURATION[currentNote];
           tone(buzzerAPin, MARY_HAD_A_LITTLE_LAMB_NOTES[currentNote], noteDuration);
+          delay(noteDuration * 1.30);
+          noTone(8);
+        }
+      }
+      else if (song == 2) {
+        for (int currentNote = 0; currentNote < sizeof(C_ARPEGGIO_NOTES); currentNote++) {
+          int noteDuration = 1000 / C_ARPEGGIO_DURATION[currentNote];
+          tone(buzzerAPin, C_ARPEGGIO_NOTES[currentNote], noteDuration);
           delay(noteDuration * 1.30);
           noTone(8);
         }
@@ -379,7 +387,6 @@ void rotaryEncoder() {
   long rotaryEncoderDataRead = digitalRead(rotaryEncoderData);
   long rotaryEncoderCLKRead = digitalRead(rotaryEncoderCLK);
   int rotaryEncoderSwitchRead = digitalRead(rotaryEncoderSwitch);
-  int clkLast = rotaryEncoderCLKRead;
   #ifdef DEBUG
     if (DEBUG) {
       Serial.println("Debug: Rotary Encoder Module...");
@@ -407,28 +414,31 @@ void rotaryEncoder() {
   #endif
   #ifdef RAW
     if (RAW) {
-      Serial.println("RAW data from rotary encoder is ");
+//      Serial.println("RAW data from rotary encoder is ");
       Serial.print("Data: ");
       Serial.print(rotaryEncoderDataRead);
       Serial.print(", CLK: ");
       Serial.print(rotaryEncoderCLKRead);
       Serial.print(", button: ");
       Serial.println(rotaryEncoderSwitchRead);
-      debugDelay();
+//      debugDelay();
     }
   #endif
   #ifdef DEMO
     if (DEMO) {
       rotaryEncoderCLKRead = digitalRead(rotaryEncoderCLK);
-      if (rotaryEncoderCLKRead != clkLast && rotaryEncoderCLKRead == LOW) {
-        if (digitalRead(rotaryEncoderDataRead) != rotaryEncoderCLKRead) {
+      if(rotaryEncoderCLKRead > rotaryEncoderCLKReadLast) {
+        if (rotaryEncoderCLKRead != rotaryEncoderDataRead) {
           Serial.println ("clockwise");
+          val+=10;
         }
         else {
-          Serial.println("counterclockwise");
+          Serial.println ("counterclockwise");
+          val-=10;
         }
-     } 
-     clkLast = rotaryEncoderCLKRead;
+        analogWrite(smdRedPin, val);
+      }
+      rotaryEncoderCLKReadLast = rotaryEncoderCLKRead;
    }
   #endif
 }
@@ -518,7 +528,7 @@ void touchSensor() {
   #ifdef DEMO
     if (DEMO) {
       if (touchRead) {
-        rgLed2();
+        rgLed1();
       }
       if (!touchRead) {
         //do nothing
@@ -530,27 +540,34 @@ void touchSensor() {
 // radio tx
 // radio rx
 void radio() {
-  const unsigned int upperThreshold = 50;  //upper threshold value
-  const unsigned int lowerThreshold = 40;  //lower threshold value
+  const unsigned int upperThreshold = 80;  //upper threshold value
+  const unsigned int lowerThreshold = 50;  //lower threshold value
   unsigned int data = 0;
 
-  delay(500);
+  delay(50);
   digitalWrite(radio_txPin, LOW);
   
   data = analogRead(radio_rxPin);
   Serial.println(data);
+
+  if(Serial.available()) {
+    digitalWrite(rgLedGreenPin, HIGH);
+  }
+  else {
+    digitalWrite(rgLedGreenPin, LOW);
+  }
   
-  if(data>upperThreshold){
-     // If a LOW signal is received, turn LED OFF
-     digitalWrite(rgLedRedPin, LOW);
-     //Serial.println("low");
-   }
-   
-   if(data<lowerThreshold){
-     //If a HIGH signal is received, turn LED ON
-     digitalWrite(rgLedRedPin, HIGH);
-     //Serial.println("high");
-   }
+//  if(data>upperThreshold){
+//     // If a LOW signal is received, turn LED OFF
+//     digitalWrite(rgLedGreenPin, LOW);
+//     //Serial.println("low");
+//   }
+//   
+//   if(data<lowerThreshold){
+//     //If a HIGH signal is received, turn LED ON
+//     digitalWrite(rgLedGreenPin, HIGH);
+//     //Serial.println("high");
+//   }
 }
 
 void ldr() {
@@ -589,12 +606,7 @@ void ldr() {
   #endif
   #ifdef DEMO
     if (DEMO) {
-      if (ldrRead) {
-        rgLed2();
-      }
-      if (!ldrRead) {
-        //do nothing
-      }
+      Serial.println(ldrRead);
     }
   #endif
 }
@@ -635,12 +647,17 @@ void heartbeat() {
   #endif
   #ifdef DEMO
     if (DEMO) {
-      if (heartbeatRead) {
-        rgLed2();
-      }
-      if (!heartbeatRead) {
-        //do nothing
-      }
+      static double oldValue = 0;
+      static double oldChange = 0;
+   
+      double value = alpha * oldValue + (1 - alpha) * heartbeatRead;
+   
+      Serial.print (heartbeatRead);
+      Serial.print (",");
+      Serial.println (value);
+      oldValue = value;
+   
+      delay (period);
     }
   #endif
 }
@@ -853,6 +870,16 @@ void button() {
 
 
 //shortcut hardware
+void rgLed1() {
+  digitalWrite(rgLedGreenPin, HIGH);
+  delay(flash);
+  digitalWrite(rgLedGreenPin, LOW);
+  digitalWrite(rgLedRedPin, HIGH);
+  delay(flash);
+  digitalWrite(rgLedRedPin, LOW);
+  delay(flash);
+}
+
 void rgLed2() {
   digitalWrite(rgLedGreenPin2, HIGH);
   delay(flash);
