@@ -384,8 +384,8 @@ void microphone() {
 }
 
 void rotaryEncoder() {
-  long rotaryEncoderDataRead = digitalRead(rotaryEncoderData);
-  long rotaryEncoderCLKRead = digitalRead(rotaryEncoderCLK);
+  int rotaryEncoderDataRead = digitalRead(rotaryEncoderData);
+  int rotaryEncoderCLKRead = digitalRead(rotaryEncoderCLK);
   int rotaryEncoderSwitchRead = digitalRead(rotaryEncoderSwitch);
   #ifdef DEBUG
     if (DEBUG) {
@@ -414,31 +414,57 @@ void rotaryEncoder() {
   #endif
   #ifdef RAW
     if (RAW) {
-//      Serial.println("RAW data from rotary encoder is ");
+      Serial.println("RAW data from rotary encoder is ");
       Serial.print("Data: ");
       Serial.print(rotaryEncoderDataRead);
       Serial.print(", CLK: ");
       Serial.print(rotaryEncoderCLKRead);
       Serial.print(", button: ");
       Serial.println(rotaryEncoderSwitchRead);
-//      debugDelay();
+      debugDelay();
     }
   #endif
   #ifdef DEMO
     if (DEMO) {
-      rotaryEncoderCLKRead = digitalRead(rotaryEncoderCLK);
-      if(rotaryEncoderCLKRead > rotaryEncoderCLKReadLast) {
-        if (rotaryEncoderCLKRead != rotaryEncoderDataRead) {
-          Serial.println ("clockwise");
-          val+=10;
-        }
-        else {
-          Serial.println ("counterclockwise");
-          val-=10;
-        }
-        analogWrite(smdRedPin, val);
+      if (rotaryEncoderSwitchRead != lastButtonState) {
+        lastDebounceTime = millis();
       }
-      rotaryEncoderCLKReadLast = rotaryEncoderCLKRead;
+      if ((millis() - lastDebounceTime) > debounceDelay) {
+        if (rotaryEncoderSwitchRead != buttonState) {
+          buttonState = rotaryEncoderSwitchRead;
+          if (buttonState == HIGH) {
+            switchPressed = !switchPressed;
+            analogWrite(smdRedPin, 0);
+          }
+        }
+      }
+      lastButtonState = rotaryEncoderSwitchRead;
+      if(switchPressed) {
+        rotaryEncoderCLKRead = digitalRead(rotaryEncoderCLK);
+        if(rotaryEncoderCLKRead > rotaryEncoderCLKReadLast) {
+          if (rotaryEncoderCLKRead != rotaryEncoderDataRead) {
+  //          Serial.println ("clockwise");
+            if(val <= 245) {
+              val+=10;
+            }
+            else {
+              val = 0;
+            }
+          }
+          else {
+  //          Serial.println ("counterclockwise");
+            if(val >= 10) {
+              val-=10;
+            }
+            else {
+              val = 0;
+            }
+          }
+          Serial.println(ledCycle[whichLed]);
+          analogWrite(smdRedPin, val);
+        }
+        rotaryEncoderCLKReadLast = rotaryEncoderCLKRead;
+      }
    }
   #endif
 }

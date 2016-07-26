@@ -68,6 +68,13 @@ int rotaryEncoderData = 40;
 int rotaryEncoderCLK = 42; //for generating interrupts using CLK signal
 long rotaryEncoderCLKReadLast = digitalRead(rotaryEncoderCLK);
 double val = 0;
+boolean switchPressed = false;
+const int ledCycle[] = {0, smdRedPin, smdGreenPin, smdBluePin};
+int whichLed = 0;
+int buttonState;
+int lastButtonState = LOW;
+long lastDebounceTime = 0;
+long debounceDelay = 50;
 
 int infraRedTx = 30; // IR Tx
 int touchPin = 25; // touch
