@@ -11,7 +11,7 @@ void setup() {
   //Input Sensors
   pinMode(lightBlockingPin, INPUT); //light blocking module
   pinMode(reedPin, INPUT); //reed switch
-  pinMode(tapSensorPin, INPUT); //tap module
+  //pinMode(tapSensorPin, INPUT_PULLUP); //tap module
   pinMode(ultrasonicEchoPin, INPUT); //Ultrasonic echo
   pinMode(blockingPin, INPUT); //blocking module
   pinMode(micPin, INPUT); //microphone input
@@ -47,8 +47,8 @@ void setup() {
   pinMode(rgLedGreenPin, OUTPUT); //two colour led green
   pinMode(buzzerBPin, OUTPUT); //buzzer B
   pinMode(infraRedTx, OUTPUT); //infrared transmitter
-  pinMode(rgLedRedPin, OUTPUT); //two colour led 2 red pin
-  pinMode(rgLedGreenPin, OUTPUT); //two colour led 2 green pin
+  pinMode(heledCyan, OUTPUT); //two colour led 2 red pin
+  pinMode(heledRed, OUTPUT); //two colour led 2 green pin
 }
 
 void loop() {
@@ -95,14 +95,16 @@ void mainProgram() {
   //  rotaryEncoder();
   //  itTxRxSensors();
   //  touchSensor();
-  radio();
+  //radio();
   //  ldr();
   //  heartbeat();
   //  ballSwitch();
   //  miniReedSensor();
   //  joystick();
   //  button();
-
+  //temperatureAndHumidity();
+  //tapSensor();
+  heled();
   // output
   //  buzzerA(1);
 }
@@ -345,7 +347,7 @@ void irBlocking() {
 #ifdef DEMO
   if (DEMO) {
     if (irBlocked) {
-      rgLed2();
+      heled();
     }
     if (!irBlocked) {
       //do nothing
@@ -531,7 +533,7 @@ void itTxRxSensors() {
 #ifdef DEMO
   if (DEMO) {
     if (irReceiver) {
-      rgLed2();
+      heled();
     }
     if (!irReceiver) {
       //do nothing
@@ -741,7 +743,7 @@ void ballSwitch() {
 #ifdef DEMO
   if (DEMO) {
     if (ballRead) {
-      rgLed2();
+      heled();
     }
     if (!ballRead) {
       //do nothing
@@ -856,7 +858,7 @@ void joystick() {
 #ifdef DEMO
   if (DEMO) {
     if (joyStickButtonRead) {
-      rgLed2();
+      heled();
     }
     if (!joyStickButtonRead) {
       //do nothing
@@ -922,13 +924,13 @@ void rgLed1() {
   delay(flash);
 }
 
-void rgLed2() {
-  digitalWrite(rgLedGreenPin2, HIGH);
+void heled() {
+  digitalWrite(heledCyan, HIGH);
   delay(flash);
-  digitalWrite(rgLedGreenPin2, LOW);
-  digitalWrite(rgLedRedPin2, HIGH);
+  digitalWrite(heledCyan, LOW);
+  digitalWrite(heledRed, HIGH);
   delay(flash);
-  digitalWrite(rgLedRedPin2, LOW);
+  digitalWrite(heledRed, LOW);
   delay(flash);
 }
 
@@ -974,6 +976,18 @@ void smdLed(int sequence) {
   }
 #endif
 }
+/*
+void temperatureAndHumidity() {
+  int temp = analogRead(temphumidity);
+  Serial.println(temp);
+}
+
+void tapSensor() {
+  int tapDetected = digitalRead(tapSensorPin);
+  Serial.println(tapDetected);
+}
+*/
+
 
 //shortcut methods
 void spacer() {
