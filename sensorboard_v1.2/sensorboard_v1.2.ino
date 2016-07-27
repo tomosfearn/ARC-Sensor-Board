@@ -86,27 +86,27 @@ void loop() {
 void mainProgram() {
   //  spacer();
 
-  // input
-  //  lightBlocking();
-  //  reedSensor();
-  //  ultrasonic();
-  //  irBlocking();
-  //  microphone();
-  //  rotaryEncoder();
-  //  itTxRxSensors();
-  //  touchSensor();
+  //input
+  //lightBlocking();
+  //reedSensor();
+  //ultrasonic();
+  //irBlocking();
+  //microphone();
+  //rotaryEncoder();
+  //itTxRxSensors();
+  //touchSensor();
   //radio();
-  //  ldr();
-  //  heartbeat();
-  //  ballSwitch();
-  //  miniReedSensor();
-  //  joystick();
-  //  button();
+  //ldr();
+  //heartbeat();
+  //ballSwitch();
+  //miniReedSensor();
+  //joystick();
+  //button();
   //temperatureAndHumidity();
   //tapSensor();
-  heled();
-  // output
-  //  buzzerA(1);
+  //heled();
+  //output
+  //buzzerA(1);
 }
 
 // temp and humidity - need to work out how to represent data
@@ -607,7 +607,7 @@ void radio() {
     delay(500);
     digitalWrite(rgLedRedPin, LOW);
   }
-  
+
   if ((!radio0) && (!radio1)) {
     //do nothing
   }
@@ -977,15 +977,15 @@ void smdLed(int sequence) {
 #endif
 }
 /*
-void temperatureAndHumidity() {
+  void temperatureAndHumidity() {
   int temp = analogRead(temphumidity);
   Serial.println(temp);
-}
+  }
 
-void tapSensor() {
+  void tapSensor() {
   int tapDetected = digitalRead(tapSensorPin);
   Serial.println(tapDetected);
-}
+  }
 */
 
 
