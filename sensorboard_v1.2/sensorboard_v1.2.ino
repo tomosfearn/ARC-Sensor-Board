@@ -110,7 +110,7 @@ void mainProgram() {
   //heled();
   //output
   //buzzerA(1);
-  rgb2LED();
+  //rgb2LED();
 }
 
 // temp and humidity - need to work out how to represent data
