@@ -20,7 +20,7 @@ void setup() {
   pinMode(rotaryEncoderData, INPUT); //rotary encoder input data
   pinMode(rotaryEncoderCLK, INPUT); //rotary encoder interrupt data
   pinMode(touchPin, INPUT_PULLUP); //touch sensor
-  pinMode(radio_rxPin, INPUT); //radio receiver pin
+  //pinMode(radio_rxPin, INPUT); //radio receiver pin
   pinMode(ldrPin, INPUT); //light sensor
   pinMode(heartBeatPin, INPUT); //heart beat sensor
   pinMode(infraRedRx, INPUT_PULLUP); //infra red receiver
@@ -30,6 +30,8 @@ void setup() {
   pinMode(joyStickX, INPUT); //Joy Stick X axis
   pinMode(joyStickY, INPUT); //Joy stick Y axis
   pinMode(buttonPin, INPUT_PULLUP); //button module
+  pinMode(radio0Pin, INPUT); //radio 0
+  pinMode(radio1Pin, INPUT); //radio 1
 
   //Outputs
   pinMode(buzzerAPin, OUTPUT); //buzzer A
@@ -45,197 +47,196 @@ void setup() {
   pinMode(rgLedGreenPin, OUTPUT); //two colour led green
   pinMode(buzzerBPin, OUTPUT); //buzzer B
   pinMode(infraRedTx, OUTPUT); //infrared transmitter
-  pinMode(radio_txPin, OUTPUT); //radio transmitter pin
   pinMode(rgLedRedPin, OUTPUT); //two colour led 2 red pin
   pinMode(rgLedGreenPin, OUTPUT); //two colour led 2 green pin
 }
 
 void loop() {
-  if(Serial.available()) {
-    #ifdef DEBUG
-      if (DEBUG) {
-        myChoise = Serial.readString();
-        if (myChoise == "light blocking") {
-          lightBlocking();
-        }
-  
-        if (myChoise == "reed sensor") {
-          reedSensor();
-        }
-  
-        if (myChoise == "button") {
-          button();
-        }
-  
-        if (myChoise == "buzzerA") {
-          buzzerA(1);
-        }
+  if (Serial.available()) {
+#ifdef DEBUG
+    if (DEBUG) {
+      myChoise = Serial.readString();
+      if (myChoise == "light blocking") {
+        lightBlocking();
       }
-    #endif
+
+      if (myChoise == "reed sensor") {
+        reedSensor();
+      }
+
+      if (myChoise == "button") {
+        button();
+      }
+
+      if (myChoise == "buzzerA") {
+        buzzerA(1);
+      }
+    }
+#endif
   }
-  #ifdef RAW
-    mainProgram();
-  #endif
-  #ifdef DEMO
-    mainProgram();
-  #endif
+#ifdef RAW
+  mainProgram();
+#endif
+#ifdef DEMO
+  mainProgram();
+#endif
 }
 
 
 void mainProgram() {
-//  spacer();
+  //  spacer();
 
   // input
-  lightBlocking();
-//  reedSensor();
-//  ultrasonic();
-//  irBlocking();
-  microphone();
-  rotaryEncoder();
-//  itTxRxSensors();
-  touchSensor();
-//  radio();
-//  ldr();
-//  heartbeat();
-//  ballSwitch();
-//  miniReedSensor();
-//  joystick();
-//  button();
+  //  lightBlocking();
+  //  reedSensor();
+  //  ultrasonic();
+  //  irBlocking();
+  //  microphone();
+  //  rotaryEncoder();
+  //  itTxRxSensors();
+  //  touchSensor();
+  radio();
+  //  ldr();
+  //  heartbeat();
+  //  ballSwitch();
+  //  miniReedSensor();
+  //  joystick();
+  //  button();
 
   // output
-//  buzzerA(1);
+  //  buzzerA(1);
 }
 
 // temp and humidity - need to work out how to represent data
 
 void lightBlocking() {
   int lightBlocked = digitalRead(lightBlockingPin);
-  #ifdef DEBUG
-    if (DEBUG) {
-      Serial.println("Debug: Light Blocking Module...");
-      for (int i = 10; i > 0; i--) {
-        if (lightBlocked) {
-          Serial.print("Light has been blocked on ");
-          Serial.print(i);
-          Serial.println(" turn");
-          debugDelay();
-          success();
-          continue;
+#ifdef DEBUG
+  if (DEBUG) {
+    Serial.println("Debug: Light Blocking Module...");
+    for (int i = 10; i > 0; i--) {
+      if (lightBlocked) {
+        Serial.print("Light has been blocked on ");
+        Serial.print(i);
+        Serial.println(" turn");
+        debugDelay();
+        success();
+        continue;
+      }
+      else {
+        if (i == 0) {
+          fail();
         }
         else {
-          if (i == 0) {
-            fail();
-          }
-          else {
-            Serial.print(i);
-            Serial.println(" turns left");
-            debugDelay();
-          }
+          Serial.print(i);
+          Serial.println(" turns left");
+          debugDelay();
         }
       }
     }
-  #endif
-  #ifdef RAW
-    if (RAW) {
-      Serial.println("RAW data from light blocking module is ");
-      Serial.println(lightBlocked);
-      debugDelay();
+  }
+#endif
+#ifdef RAW
+  if (RAW) {
+    Serial.println("RAW data from light blocking module is ");
+    Serial.println(lightBlocked);
+    debugDelay();
+  }
+#endif
+#ifdef DEMO
+  if (DEMO) {
+    if (lightBlocked) {
+      buzzerA(2);
     }
-  #endif
-  #ifdef DEMO
-    if (DEMO) {
-      if (lightBlocked) {
-        buzzerA(2);
-      }
-      if (!lightBlocked) {
-        //do nothing
-      }
+    if (!lightBlocked) {
+      //do nothing
     }
-  #endif
+  }
+#endif
 }
-  
+
 void buzzerA(int song) {
-  #ifdef DEBUG
-    if (DEBUG) {
-      if (song == 1) {
-        for (int currentNote = 0; currentNote < sizeof(MARY_HAD_A_LITTLE_LAMB_NOTES); currentNote++) {
-          Serial.println(MARY_HAD_A_LITTLE_LAMB_NOTES[currentNote]);
-          int noteDuration = 1000 / MARY_HAD_A_LITTLE_LAMB_DURATION[currentNote];
-          tone(buzzerAPin, MARY_HAD_A_LITTLE_LAMB_NOTES[currentNote], noteDuration);
-          delay(noteDuration * 1.30);
-          noTone(8);
-        }
+#ifdef DEBUG
+  if (DEBUG) {
+    if (song == 1) {
+      for (int currentNote = 0; currentNote < sizeof(MARY_HAD_A_LITTLE_LAMB_NOTES); currentNote++) {
+        Serial.println(MARY_HAD_A_LITTLE_LAMB_NOTES[currentNote]);
+        int noteDuration = 1000 / MARY_HAD_A_LITTLE_LAMB_DURATION[currentNote];
+        tone(buzzerAPin, MARY_HAD_A_LITTLE_LAMB_NOTES[currentNote], noteDuration);
+        delay(noteDuration * 1.30);
+        noTone(8);
       }
     }
-  #endif
-  #ifdef DEMO
-    if (DEMO) {
-      if (song == 1) {
-        for (int currentNote = 0; currentNote < sizeof(MARY_HAD_A_LITTLE_LAMB_NOTES); currentNote++) {
-          int noteDuration = 1000 / MARY_HAD_A_LITTLE_LAMB_DURATION[currentNote];
-          tone(buzzerAPin, MARY_HAD_A_LITTLE_LAMB_NOTES[currentNote], noteDuration);
-          delay(noteDuration * 1.30);
-          noTone(8);
-        }
+  }
+#endif
+#ifdef DEMO
+  if (DEMO) {
+    if (song == 1) {
+      for (int currentNote = 0; currentNote < sizeof(MARY_HAD_A_LITTLE_LAMB_NOTES); currentNote++) {
+        int noteDuration = 1000 / MARY_HAD_A_LITTLE_LAMB_DURATION[currentNote];
+        tone(buzzerAPin, MARY_HAD_A_LITTLE_LAMB_NOTES[currentNote], noteDuration);
+        delay(noteDuration * 1.30);
+        noTone(8);
       }
-      else if (song == 2) {
-        for (int currentNote = 0; currentNote < sizeof(C_ARPEGGIO_NOTES); currentNote++) {
-          int noteDuration = 1000 / C_ARPEGGIO_DURATION[currentNote];
-          tone(buzzerAPin, C_ARPEGGIO_NOTES[currentNote], noteDuration);
-          delay(noteDuration * 1.30);
-          noTone(8);
-        }
+    }
+    else if (song == 2) {
+      for (int currentNote = 0; currentNote < sizeof(C_ARPEGGIO_NOTES); currentNote++) {
+        int noteDuration = 1000 / C_ARPEGGIO_DURATION[currentNote];
+        tone(buzzerAPin, C_ARPEGGIO_NOTES[currentNote], noteDuration);
+        delay(noteDuration * 1.30);
+        noTone(8);
       }
-  #endif
+    }
+#endif
   }
 }
 
 void reedSensor() {
   int reedActivated = digitalRead(reedPin);
-  #ifdef DEBUG
-    if (DEBUG) {
-      Serial.println("Debug: Reed Module...");
-      for (int i = 10; i > 0; i--) {
-        if (reedActivated) {
-          Serial.print("Reed has been activated on ");
-          Serial.print(i);
-          Serial.println(" turn");
-          debugDelay();
-          success();
+#ifdef DEBUG
+  if (DEBUG) {
+    Serial.println("Debug: Reed Module...");
+    for (int i = 10; i > 0; i--) {
+      if (reedActivated) {
+        Serial.print("Reed has been activated on ");
+        Serial.print(i);
+        Serial.println(" turn");
+        debugDelay();
+        success();
+      }
+      else {
+        if (i == 0) {
+          fail();
         }
         else {
-          if (i == 0) {
-            fail();
-          }
-          else {
-            Serial.print(i);
-            Serial.println(" turns left");
-            debugDelay();
-          }
+          Serial.print(i);
+          Serial.println(" turns left");
+          debugDelay();
         }
       }
     }
-  #endif
-  #ifdef RAW
-    if (RAW) {
-      Serial.println("RAW data from the reed module is ");
-      Serial.println(reedActivated);
-      debugDelay();
+  }
+#endif
+#ifdef RAW
+  if (RAW) {
+    Serial.println("RAW data from the reed module is ");
+    Serial.println(reedActivated);
+    debugDelay();
+  }
+#endif
+#ifdef DEMO
+  if (DEMO) {
+    if (reedActivated) {
+      smdLed(1);
     }
-  #endif
-  #ifdef DEMO
-    if (DEMO) {
-      if (reedActivated) {
-        smdLed(1);
-      }
-      if (!reedActivated) {
-        //do nothing
-      }
+    if (!reedActivated) {
+      //do nothing
     }
-  #endif
+  }
+#endif
 }
-
-void ultrasonic() {
+/*
+  void ultrasonic() {
   // trigger ping
   digitalWrite(ultrasonicTriggerPin, HIGH);
   delay(10);
@@ -246,7 +247,7 @@ void ultrasonic() {
   // The ping travels out and back, so to find the distance of the
   // object we take half of the distance travelled.
   long distance = (ultrasonicRead/29)/2;
-  
+
   #ifdef DEBUG
     if (DEBUG) {
       Serial.println("Debug: Ultrasonic Module...");
@@ -305,98 +306,98 @@ void ultrasonic() {
       }
     }
   #endif
-}
-
+  }
+*/
 void irBlocking() {
   int irBlocked = digitalRead(blockingPin);
-  #ifdef DEBUG
-    if (DEBUG) {
-      Serial.println("Debug: IR Blocking Module...");
-      for (int i = 10; i > 0; i--) {
-        if (irBlocked) {
-          Serial.print("IR has been blocked on ");
-          Serial.print(i);
-          Serial.println(" turn");
-          debugDelay();
-          success();
-          continue;
+#ifdef DEBUG
+  if (DEBUG) {
+    Serial.println("Debug: IR Blocking Module...");
+    for (int i = 10; i > 0; i--) {
+      if (irBlocked) {
+        Serial.print("IR has been blocked on ");
+        Serial.print(i);
+        Serial.println(" turn");
+        debugDelay();
+        success();
+        continue;
+      }
+      else {
+        if (i == 0) {
+          fail();
         }
         else {
-          if (i == 0) {
-            fail();
-          }
-          else {
-            Serial.print(i);
-            Serial.println(" turns left");
-            debugDelay();
-          }
+          Serial.print(i);
+          Serial.println(" turns left");
+          debugDelay();
         }
       }
     }
-  #endif
-  #ifdef RAW
-    if (RAW) {
-      Serial.println("RAW data from IR blocking module is ");
-      Serial.println(irBlocked);
-      debugDelay();
+  }
+#endif
+#ifdef RAW
+  if (RAW) {
+    Serial.println("RAW data from IR blocking module is ");
+    Serial.println(irBlocked);
+    debugDelay();
+  }
+#endif
+#ifdef DEMO
+  if (DEMO) {
+    if (irBlocked) {
+      rgLed2();
     }
-  #endif
-  #ifdef DEMO
-    if (DEMO) {
-      if (irBlocked) {
-        rgLed2();
-      }
-      if (!irBlocked) {
-        //do nothing
-      }
+    if (!irBlocked) {
+      //do nothing
     }
-  #endif
+  }
+#endif
 }
 
 void microphone() {
   int micTapped = digitalRead(micPin);
-  #ifdef DEBUG
-    if (DEBUG) {
-      Serial.println("Debug: Microphone Module...");
-      for (int i = 10; i > 0; i--) {
-        if (micTapped) {
-          Serial.print("Microphone has been tapped on ");
-          Serial.print(i);
-          Serial.println(" turn");
-          debugDelay();
-          success();
-          continue;
+#ifdef DEBUG
+  if (DEBUG) {
+    Serial.println("Debug: Microphone Module...");
+    for (int i = 10; i > 0; i--) {
+      if (micTapped) {
+        Serial.print("Microphone has been tapped on ");
+        Serial.print(i);
+        Serial.println(" turn");
+        debugDelay();
+        success();
+        continue;
+      }
+      else {
+        if (i == 0) {
+          fail();
         }
         else {
-          if (i == 0) {
-            fail();
-          }
-          else {
-            Serial.print(i);
-            Serial.println(" turns left");
-            debugDelay();
-          }
+          Serial.print(i);
+          Serial.println(" turns left");
+          debugDelay();
         }
       }
     }
-  #endif
-  #ifdef RAW
-    if (RAW) {
-      Serial.println("RAW data from microphone module is ");
-      Serial.println(micTapped);
-      debugDelay();
+  }
+#endif
+#ifdef RAW
+  if (RAW) {
+    Serial.println("RAW data from microphone module is ");
+    Serial.println(micTapped);
+    debugDelay();
+  }
+#endif
+#ifdef DEMO
+  if (DEMO) {
+    if (micTapped) {
+      buzzerB();
     }
-  #endif
-  #ifdef DEMO
-    if (DEMO) {
-      if (micTapped) {
-        buzzerB();
-      }
-      if (!micTapped) {
-        //do nothing
-      }
+    if (!micTapped) {
+      //do nothing
     }
-  #endif
+  }
+#endif
 }
 
 void buzzerB() {
@@ -409,464 +410,459 @@ void rotaryEncoder() {
   int rotaryEncoderDataRead = digitalRead(rotaryEncoderData);
   int rotaryEncoderCLKRead = digitalRead(rotaryEncoderCLK);
   int rotaryEncoderSwitchRead = digitalRead(rotaryEncoderSwitch);
-  #ifdef DEBUG
-    if (DEBUG) {
-      Serial.println("Debug: Rotary Encoder Module...");
-      for (int i = 10; i > 0; i--) {
-        if (rotaryEncoderData) {
-          Serial.print("Rotary Encoder is receiving data on ");
-          Serial.print(i);
-          Serial.println(" turn");
-          debugDelay();
-          success();
-          continue;
+#ifdef DEBUG
+  if (DEBUG) {
+    Serial.println("Debug: Rotary Encoder Module...");
+    for (int i = 10; i > 0; i--) {
+      if (rotaryEncoderData) {
+        Serial.print("Rotary Encoder is receiving data on ");
+        Serial.print(i);
+        Serial.println(" turn");
+        debugDelay();
+        success();
+        continue;
+      }
+      else {
+        if (i == 0) {
+          fail();
         }
         else {
-          if (i == 0) {
-            fail();
-          }
-          else {
-            Serial.print(i);
-            Serial.println(" turns left");
-            debugDelay();
-          }
+          Serial.print(i);
+          Serial.println(" turns left");
+          debugDelay();
         }
       }
     }
-  #endif
-  #ifdef RAW
-    if (RAW) {
-      Serial.println("RAW data from rotary encoder is ");
-      Serial.print("Data: ");
-      Serial.print(rotaryEncoderDataRead);
-      Serial.print(", CLK: ");
-      Serial.print(rotaryEncoderCLKRead);
-      Serial.print(", button: ");
-      Serial.println(rotaryEncoderSwitchRead);
-      debugDelay();
+  }
+#endif
+#ifdef RAW
+  if (RAW) {
+    Serial.println("RAW data from rotary encoder is ");
+    Serial.print("Data: ");
+    Serial.print(rotaryEncoderDataRead);
+    Serial.print(", CLK: ");
+    Serial.print(rotaryEncoderCLKRead);
+    Serial.print(", button: ");
+    Serial.println(rotaryEncoderSwitchRead);
+    debugDelay();
+  }
+#endif
+#ifdef DEMO
+  if (DEMO) {
+    if (rotaryEncoderSwitchRead != lastButtonState) {
+      lastDebounceTime = millis();
     }
-  #endif
-  #ifdef DEMO
-    if (DEMO) {
-      if (rotaryEncoderSwitchRead != lastButtonState) {
-        lastDebounceTime = millis();
-      }
-      if ((millis() - lastDebounceTime) > debounceDelay) {
-        if (rotaryEncoderSwitchRead != buttonState) {
-          buttonState = rotaryEncoderSwitchRead;
-          if (buttonState == HIGH) {
-            switchPressed = !switchPressed;
-            analogWrite(smdRedPin, 0);
-          }
+    if ((millis() - lastDebounceTime) > debounceDelay) {
+      if (rotaryEncoderSwitchRead != buttonState) {
+        buttonState = rotaryEncoderSwitchRead;
+        if (buttonState == HIGH) {
+          switchPressed = !switchPressed;
+          analogWrite(smdRedPin, 0);
         }
       }
-      lastButtonState = rotaryEncoderSwitchRead;
-      if(switchPressed) {
-        rotaryEncoderCLKRead = digitalRead(rotaryEncoderCLK);
-        if(rotaryEncoderCLKRead > rotaryEncoderCLKReadLast) {
-          if (rotaryEncoderCLKRead != rotaryEncoderDataRead) {
-  //          Serial.println ("clockwise");
-            if(val <= 245) {
-              val+=10;
-            }
-            else {
-              val = 0;
-            }
+    }
+    lastButtonState = rotaryEncoderSwitchRead;
+    if (switchPressed) {
+      rotaryEncoderCLKRead = digitalRead(rotaryEncoderCLK);
+      if (rotaryEncoderCLKRead > rotaryEncoderCLKReadLast) {
+        if (rotaryEncoderCLKRead != rotaryEncoderDataRead) {
+          //          Serial.println ("clockwise");
+          if (val <= 245) {
+            val += 10;
           }
           else {
-  //          Serial.println ("counterclockwise");
-            if(val >= 10) {
-              val-=10;
-            }
-            else {
-              val = 0;
-            }
+            val = 0;
           }
-          Serial.println(ledCycle[whichLed]);
-          analogWrite(smdRedPin, val);
         }
-        rotaryEncoderCLKReadLast = rotaryEncoderCLKRead;
+        else {
+          //          Serial.println ("counterclockwise");
+          if (val >= 10) {
+            val -= 10;
+          }
+          else {
+            val = 0;
+          }
+        }
+        Serial.println(ledCycle[whichLed]);
+        analogWrite(smdRedPin, val);
       }
-   }
-  #endif
+      rotaryEncoderCLKReadLast = rotaryEncoderCLKRead;
+    }
+  }
+#endif
 }
 
 void itTxRxSensors() {
   digitalWrite(infraRedTx, HIGH); // turn on the transmitter
-  
+
   int irReceiver = digitalRead(infraRedRx);
-  #ifdef DEBUG
-    if (DEBUG) {
-      Serial.println("Debug: IR Receiver Module...");
-      for (int i = 10; i > 0; i--) {
-        if (irReceiver) {
-          Serial.print("IR has been blocked on ");
-          Serial.print(i);
-          Serial.println(" turn");
-          debugDelay();
-          success();
-          continue;
+#ifdef DEBUG
+  if (DEBUG) {
+    Serial.println("Debug: IR Receiver Module...");
+    for (int i = 10; i > 0; i--) {
+      if (irReceiver) {
+        Serial.print("IR has been blocked on ");
+        Serial.print(i);
+        Serial.println(" turn");
+        debugDelay();
+        success();
+        continue;
+      }
+      else {
+        if (i == 0) {
+          fail();
         }
         else {
-          if (i == 0) {
-            fail();
-          }
-          else {
-            Serial.print(i);
-            Serial.println(" turns left");
-            debugDelay();
-          }
+          Serial.print(i);
+          Serial.println(" turns left");
+          debugDelay();
         }
       }
     }
-  #endif
-  #ifdef RAW
-    if (RAW) {
-      Serial.println("RAW data from IR receiver module is ");
-      Serial.println(irReceiver);
-      debugDelay();
+  }
+#endif
+#ifdef RAW
+  if (RAW) {
+    Serial.println("RAW data from IR receiver module is ");
+    Serial.println(irReceiver);
+    debugDelay();
+  }
+#endif
+#ifdef DEMO
+  if (DEMO) {
+    if (irReceiver) {
+      rgLed2();
     }
-  #endif
-  #ifdef DEMO
-    if (DEMO) {
-      if (irReceiver) {
-        rgLed2();
-      }
-      if (!irReceiver) {
-        //do nothing
-      }
+    if (!irReceiver) {
+      //do nothing
     }
-  #endif
+  }
+#endif
 }
 
 void touchSensor() {
   int touchRead = digitalRead(touchPin);
-  #ifdef DEBUG
-    if (DEBUG) {
-      Serial.println("Debug: Touch Module...");
-      for (int i = 10; i > 0; i--) {
-        if (touchRead) {
-          Serial.print("Touch Sensor has been touched on ");
-          Serial.print(i);
-          Serial.println(" turn");
-          debugDelay();
-          success();
-          continue;
+#ifdef DEBUG
+  if (DEBUG) {
+    Serial.println("Debug: Touch Module...");
+    for (int i = 10; i > 0; i--) {
+      if (touchRead) {
+        Serial.print("Touch Sensor has been touched on ");
+        Serial.print(i);
+        Serial.println(" turn");
+        debugDelay();
+        success();
+        continue;
+      }
+      else {
+        if (i == 0) {
+          fail();
         }
         else {
-          if (i == 0) {
-            fail();
-          }
-          else {
-            Serial.print(i);
-            Serial.println(" turns left");
-            debugDelay();
-          }
+          Serial.print(i);
+          Serial.println(" turns left");
+          debugDelay();
         }
       }
     }
-  #endif
-  #ifdef RAW
-    if (RAW) {
-      Serial.println("RAW data from touch module is ");
-      Serial.println(touchRead);
-      debugDelay();
+  }
+#endif
+#ifdef RAW
+  if (RAW) {
+    Serial.println("RAW data from touch module is ");
+    Serial.println(touchRead);
+    debugDelay();
+  }
+#endif
+#ifdef DEMO
+  if (DEMO) {
+    if (touchRead) {
+      rgLed1();
     }
-  #endif
-  #ifdef DEMO
-    if (DEMO) {
-      if (touchRead) {
-        rgLed1();
-      }
-      if (!touchRead) {
-        //do nothing
-      }
+    if (!touchRead) {
+      //do nothing
     }
-  #endif
+  }
+#endif
 }
 
+
 void radio() {
-  const unsigned int upperThreshold = 80;  //upper threshold value
-  const unsigned int lowerThreshold = 50;  //lower threshold value
-  unsigned int data = 0;
+  bool radio0 = digitalRead(radio0Pin);
+  bool radio1 = digitalRead(radio1Pin);
 
-  delay(50);
-  digitalWrite(radio_txPin, LOW);
-  
-  data = analogRead(radio_rxPin);
-  Serial.println(data);
 
-  if(Serial.available()) {
+  Serial.println(radio0);
+
+  if (radio0) {
     digitalWrite(rgLedGreenPin, HIGH);
-  }
-  else {
+    delay(500);
     digitalWrite(rgLedGreenPin, LOW);
   }
+
+  if (radio1) {
+    digitalWrite(rgLedRedPin, HIGH);
+    delay(500);
+    digitalWrite(rgLedRedPin, LOW);
+  }
   
-//  if(data>upperThreshold){
-//     // If a LOW signal is received, turn LED OFF
-//     digitalWrite(rgLedGreenPin, LOW);
-//     //Serial.println("low");
-//   }
-//   
-//   if(data<lowerThreshold){
-//     //If a HIGH signal is received, turn LED ON
-//     digitalWrite(rgLedGreenPin, HIGH);
-//     //Serial.println("high");
-//   }
+  if ((!radio0) && (!radio1)) {
+    //do nothing
+  }
+
 }
 
 void ldr() {
   int ldrRead = analogRead(ldrPin);
-  #ifdef DEBUG
-    if (DEBUG) {
-      Serial.println("Debug: LDR Module...");
-      for (int i = 10; i > 0; i--) {
-        if (ldrRead) {
-          Serial.print("LDR Sensor is receiving data on ");
-          Serial.print(i);
-          Serial.println(" turn");
-          debugDelay();
-          success();
-          continue;
+#ifdef DEBUG
+  if (DEBUG) {
+    Serial.println("Debug: LDR Module...");
+    for (int i = 10; i > 0; i--) {
+      if (ldrRead) {
+        Serial.print("LDR Sensor is receiving data on ");
+        Serial.print(i);
+        Serial.println(" turn");
+        debugDelay();
+        success();
+        continue;
+      }
+      else {
+        if (i == 0) {
+          fail();
         }
         else {
-          if (i == 0) {
-            fail();
-          }
-          else {
-            Serial.print(i);
-            Serial.println(" turns left");
-            debugDelay();
-          }
+          Serial.print(i);
+          Serial.println(" turns left");
+          debugDelay();
         }
       }
     }
-  #endif
-  #ifdef RAW
-    if (RAW) {
-      Serial.println("RAW data from ldr module is ");
-      Serial.println(ldrRead);
-      debugDelay();
-    }
-  #endif
-  #ifdef DEMO
-    if (DEMO) {
-      Serial.println(ldrRead);
-    }
-  #endif
+  }
+#endif
+#ifdef RAW
+  if (RAW) {
+    Serial.println("RAW data from ldr module is ");
+    Serial.println(ldrRead);
+    debugDelay();
+  }
+#endif
+#ifdef DEMO
+  if (DEMO) {
+    Serial.println(ldrRead);
+  }
+#endif
 }
 
 void heartbeat() {
   int heartbeatRead = analogRead(heartBeatPin);
-  #ifdef DEBUG
-    if (DEBUG) {
-      Serial.println("Debug: Heartbeat Module...");
-      for (int i = 10; i > 0; i--) {
-        if (heartbeatRead) {
-          Serial.print("Heartbeat Sensor is receiving data on ");
-          Serial.print(i);
-          Serial.println(" turn");
-          debugDelay();
-          success();
-          continue;
+#ifdef DEBUG
+  if (DEBUG) {
+    Serial.println("Debug: Heartbeat Module...");
+    for (int i = 10; i > 0; i--) {
+      if (heartbeatRead) {
+        Serial.print("Heartbeat Sensor is receiving data on ");
+        Serial.print(i);
+        Serial.println(" turn");
+        debugDelay();
+        success();
+        continue;
+      }
+      else {
+        if (i == 0) {
+          fail();
         }
         else {
-          if (i == 0) {
-            fail();
-          }
-          else {
-            Serial.print(i);
-            Serial.println(" turns left");
-            debugDelay();
-          }
+          Serial.print(i);
+          Serial.println(" turns left");
+          debugDelay();
         }
       }
     }
-  #endif
-  #ifdef RAW
-    if (RAW) {
-      Serial.println("RAW data from heartbeat module is ");
-      Serial.println(heartbeatRead);
-      debugDelay();
-    }
-  #endif
-  #ifdef DEMO
-    if (DEMO) {
-      static double oldValue = 0;
-      static double oldChange = 0;
-   
-      double value = alpha * oldValue + (1 - alpha) * heartbeatRead;
-   
-      Serial.print (heartbeatRead);
-      Serial.print (",");
-      Serial.println (value);
-      oldValue = value;
-   
-      delay (period);
-    }
-  #endif
+  }
+#endif
+#ifdef RAW
+  if (RAW) {
+    Serial.println("RAW data from heartbeat module is ");
+    Serial.println(heartbeatRead);
+    debugDelay();
+  }
+#endif
+#ifdef DEMO
+  if (DEMO) {
+    static double oldValue = 0;
+    static double oldChange = 0;
+
+    double value = alpha * oldValue + (1 - alpha) * heartbeatRead;
+
+    Serial.print (heartbeatRead);
+    Serial.print (",");
+    Serial.println (value);
+    oldValue = value;
+
+    delay (period);
+  }
+#endif
 }
 
 void ballSwitch() {
   int ballRead = digitalRead(tiltPin);
-  #ifdef DEBUG
-    if (DEBUG) {
-      Serial.println("Debug: Ball Switch Module...");
-      for (int i = 10; i > 0; i--) {
-        if (ballRead) {
-          Serial.print("Ball Switch has been tilted on ");
-          Serial.print(i);
-          Serial.println(" turn");
-          debugDelay();
-          success();
-          continue;
+#ifdef DEBUG
+  if (DEBUG) {
+    Serial.println("Debug: Ball Switch Module...");
+    for (int i = 10; i > 0; i--) {
+      if (ballRead) {
+        Serial.print("Ball Switch has been tilted on ");
+        Serial.print(i);
+        Serial.println(" turn");
+        debugDelay();
+        success();
+        continue;
+      }
+      else {
+        if (i == 0) {
+          fail();
         }
         else {
-          if (i == 0) {
-            fail();
-          }
-          else {
-            Serial.print(i);
-            Serial.println(" turns left");
-            debugDelay();
-          }
+          Serial.print(i);
+          Serial.println(" turns left");
+          debugDelay();
         }
       }
     }
-  #endif
-  #ifdef RAW
-    if (RAW) {
-      Serial.println("RAW data from ball switch module is ");
-      Serial.println(ballRead);
-      debugDelay();
+  }
+#endif
+#ifdef RAW
+  if (RAW) {
+    Serial.println("RAW data from ball switch module is ");
+    Serial.println(ballRead);
+    debugDelay();
+  }
+#endif
+#ifdef DEMO
+  if (DEMO) {
+    if (ballRead) {
+      rgLed2();
     }
-  #endif
-  #ifdef DEMO
-    if (DEMO) {
-      if (ballRead) {
-        rgLed2();
-      }
-      if (!ballRead) {
-        //do nothing
-      }
+    if (!ballRead) {
+      //do nothing
     }
-  #endif
+  }
+#endif
 }
 
 void miniReedSensor() {
   int reedActivated = digitalRead(miniReedPin);
-  #ifdef DEBUG
-    if (DEBUG) {
-      Serial.println("Debug: Mini Reed Module...");
-      for (int i = 10; i > 0; i--) {
-        if (reedActivated) {
-          Serial.print("Mini Reed has been activated on ");
-          Serial.print(i);
-          Serial.println(" turn");
-          debugDelay();
-          success();
+#ifdef DEBUG
+  if (DEBUG) {
+    Serial.println("Debug: Mini Reed Module...");
+    for (int i = 10; i > 0; i--) {
+      if (reedActivated) {
+        Serial.print("Mini Reed has been activated on ");
+        Serial.print(i);
+        Serial.println(" turn");
+        debugDelay();
+        success();
+      }
+      else {
+        if (i == 0) {
+          fail();
         }
         else {
-          if (i == 0) {
-            fail();
-          }
-          else {
-            Serial.print(i);
-            Serial.println(" turns left");
-            debugDelay();
-          }
+          Serial.print(i);
+          Serial.println(" turns left");
+          debugDelay();
         }
       }
     }
-  #endif
-  #ifdef RAW
-    if (RAW) {
-      Serial.println("RAW data from the mini reed module is ");
-      Serial.println(reedActivated);
-      debugDelay();
+  }
+#endif
+#ifdef RAW
+  if (RAW) {
+    Serial.println("RAW data from the mini reed module is ");
+    Serial.println(reedActivated);
+    debugDelay();
+  }
+#endif
+#ifdef DEMO
+  if (DEMO) {
+    if (reedActivated) {
+      smdLed(1);
     }
-  #endif
-  #ifdef DEMO
-    if (DEMO) {
-      if (reedActivated) {
-        smdLed(1);
-      }
-      if (!reedActivated) {
-        //do nothing
-      }
+    if (!reedActivated) {
+      //do nothing
     }
-  #endif
+  }
+#endif
 }
 
 void joystick() {
   long joyStickXRead = analogRead(joyStickX);
   long joyStickYRead = analogRead(joyStickY);
   int joyStickButtonRead = digitalRead(joyStickButtonPin);
-  
-  #ifdef DEBUG
-    if (DEBUG) {
-      Serial.println("Debug: Joystick Module...");
-      for (int i = 10; i > 0; i--) {
-        if (joyStickXRead) {
-          Serial.print("Joystick is receiving X data on ");
-          Serial.print(i);
-          Serial.println(" turn");
-          debugDelay();
-          success();
-          continue;
-        }
-        if (joyStickYRead) {
-          Serial.print("Joystick is receiving Y data on ");
-          Serial.print(i);
-          Serial.println(" turn");
-          debugDelay();
-          success();
-          continue;
-        }
-        if (joyStickButtonRead) {
-          Serial.print("Joystick button being pressed on ");
-          Serial.print(i);
-          Serial.println(" turn");
-          debugDelay();
-          success();
-          continue;
+
+#ifdef DEBUG
+  if (DEBUG) {
+    Serial.println("Debug: Joystick Module...");
+    for (int i = 10; i > 0; i--) {
+      if (joyStickXRead) {
+        Serial.print("Joystick is receiving X data on ");
+        Serial.print(i);
+        Serial.println(" turn");
+        debugDelay();
+        success();
+        continue;
+      }
+      if (joyStickYRead) {
+        Serial.print("Joystick is receiving Y data on ");
+        Serial.print(i);
+        Serial.println(" turn");
+        debugDelay();
+        success();
+        continue;
+      }
+      if (joyStickButtonRead) {
+        Serial.print("Joystick button being pressed on ");
+        Serial.print(i);
+        Serial.println(" turn");
+        debugDelay();
+        success();
+        continue;
+      }
+      else {
+        if (i == 0) {
+          fail();
         }
         else {
-          if (i == 0) {
-            fail();
-          }
-          else {
-            Serial.print(i);
-            Serial.println(" turns left");
-            debugDelay();
-          }
+          Serial.print(i);
+          Serial.println(" turns left");
+          debugDelay();
         }
       }
     }
-  #endif
-  #ifdef RAW
-    if (RAW) {
-      Serial.println("RAW data from joystick is ");
-      Serial.print("X: ");
-      Serial.print(joyStickXRead);
-      Serial.print(", Y: ");
-      Serial.print(joyStickYRead);
-      Serial.print(", button: ");
-      Serial.println(joyStickButtonRead);
-      debugDelay();
+  }
+#endif
+#ifdef RAW
+  if (RAW) {
+    Serial.println("RAW data from joystick is ");
+    Serial.print("X: ");
+    Serial.print(joyStickXRead);
+    Serial.print(", Y: ");
+    Serial.print(joyStickYRead);
+    Serial.print(", button: ");
+    Serial.println(joyStickButtonRead);
+    debugDelay();
+  }
+#endif
+#ifdef DEMO
+  if (DEMO) {
+    if (joyStickButtonRead) {
+      rgLed2();
     }
-  #endif
-  #ifdef DEMO
-    if (DEMO) {
-      if (joyStickButtonRead) {
-        rgLed2();
-      }
-      if (!joyStickButtonRead) {
-        //do nothing
-      }
+    if (!joyStickButtonRead) {
+      //do nothing
     }
-  #endif
+  }
+#endif
 }
 
 void button() {

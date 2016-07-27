@@ -78,8 +78,8 @@ long debounceDelay = 50;
 
 int infraRedTx = 30; // IR Tx
 int touchPin = 25; // touch
-int radio_rxPin = A5; // radio Rx; A5
-int radio_txPin = 44; // radio Tx 44
+int radio1Pin = 46; // radio Rx; A5
+int radio0Pin = 44; // radio Tx 44
 int ldrPin = A0; // LDR
 
 // heartbeat
@@ -108,3 +108,5 @@ int testDuration = 500;
 int testSeparation = 500;
 bool activateUltrasoundThing = false;
 const int flash = 100;
+
+
