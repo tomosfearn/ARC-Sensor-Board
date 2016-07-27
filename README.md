@@ -6,6 +6,27 @@ Collaborators:<br>
 lionspaws<br>
 tomosfearn<br>
 
+## Board Map
+
+| Input | Output |
+|:-----:|:------:|
+|Temperature and Humidity||
+|Light Blocking|Buzzer A Arpeggio|
+|Reed Switch||
+|Capacitive||
+|Ultrasound||
+|IR Blocking||
+|Microphone|Tap for Buzzer B tone|
+|Rotary Encoder|SMD RGB LED: turn red 0-255, press to turn off|
+|IR Tx and Rx||
+|Touch|2 Colour LED 1|
+|Radio Rx||
+|LDR||
+|Ball Switch||
+|Mini Reed||
+|Joystick||
+|Button||
+
 ## Board Text
 
 ###Bwrdd Synhwyrydd / Sensor Board
