@@ -97,7 +97,7 @@ void mainProgram() {
   //microphone();
   //rotaryEncoder();
   //itTxRxSensors();
-  //touchSensor();
+  touchSensor();
   //radio();
   //ldr();
   //heartbeat();
@@ -583,7 +583,7 @@ void touchSensor() {
 #ifdef DEMO
   if (DEMO) {
     if (touchRead) {
-      rgLed1();
+      rgb2LED();
     }
     if (!touchRead) {
       //do nothing
@@ -987,11 +987,12 @@ void rgb2LED() {
   digitalWrite(rgb2LedRed, LOW);
   digitalWrite(rgb2LedGreen, HIGH);
   delay(flash);
-  digitalWrite(rgb2LedRed, LOW);
+  digitalWrite(rgb2LedGreen, LOW);
   digitalWrite(rgb2LedBlue, HIGH);
   delay(flash);
   digitalWrite(rgb2LedBlue, LOW);
 }
+
 /*
   void temperatureAndHumidity() {
   int temp = analogRead(temphumidity);

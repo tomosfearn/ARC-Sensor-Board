@@ -12,20 +12,20 @@ tomosfearn<br>
 |:-----:|:------:|
 |Temperature and Humidity||
 |Light Blocking|Buzzer A Arpeggio|
-|Reed Switch||
-|Capacitive||
-|Ultrasound||
-|IR Blocking||
+|Reed Switch|TODO RGB LED 1|
+|Capacitive|TODO 7 Colour Flash|
+|Ultrasound|TODO SMD RGB LED|
+|IR Blocking|TODO 2 Colour LED 1|
 |Microphone|Tap for Buzzer B tone|
 |Rotary Encoder|SMD RGB LED: turn red 0-255, press to turn off|
 |IR Tx and Rx||
-|Touch|2 Colour LED 1|
-|Radio Rx||
+|Touch|RGB LED 2|
+|Radio Rx|TODO 2 Colour LED (heled)|
 |LDR||
 |Ball Switch||
 |Mini Reed||
 |Joystick||
-|Button||
+|Button|TODO All the LEDs!|
 
 ## Board Text
 
