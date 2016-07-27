@@ -49,6 +49,9 @@ void setup() {
   pinMode(infraRedTx, OUTPUT); //infrared transmitter
   pinMode(heledCyan, OUTPUT); //two colour led 2 red pin
   pinMode(heledRed, OUTPUT); //two colour led 2 green pin
+  pinMode(rgb2LedRed, OUTPUT);
+  pinMode(rgb2LedGreen, OUTPUT);
+  pinMode(rgb2LedBlue, OUTPUT);
 }
 
 void loop() {
@@ -107,6 +110,7 @@ void mainProgram() {
   //heled();
   //output
   //buzzerA(1);
+  rgb2LED();
 }
 
 // temp and humidity - need to work out how to represent data
@@ -975,6 +979,18 @@ void smdLed(int sequence) {
     }
   }
 #endif
+}
+
+void rgb2LED() {
+  digitalWrite(rgb2LedRed, HIGH);
+  delay(flash);
+  digitalWrite(rgb2LedRed, LOW);
+  digitalWrite(rgb2LedGreen, HIGH);
+  delay(flash);
+  digitalWrite(rgb2LedRed, LOW);
+  digitalWrite(rgb2LedBlue, HIGH);
+  delay(flash);
+  digitalWrite(rgb2LedBlue, LOW);
 }
 /*
   void temperatureAndHumidity() {
