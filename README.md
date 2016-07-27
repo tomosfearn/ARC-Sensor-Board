@@ -23,7 +23,7 @@ tomosfearn<br>
 |Radio Rx|TODO 2 Colour LED (heled)|
 |LDR||
 |Ball Switch||
-|Mini Reed|TODO 2 Colour LED 1 and |
+|Mini Reed|TODO 2 Colour LED 1 and RGB LED 2|
 |Joystick||
 |Button|TODO All the LEDs!|
 
