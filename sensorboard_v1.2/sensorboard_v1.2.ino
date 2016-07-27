@@ -86,14 +86,14 @@ void mainProgram() {
 //  spacer();
 
   // input
-  //  lightBlocking();
+  lightBlocking();
 //  reedSensor();
 //  ultrasonic();
 //  irBlocking();
-//  microphone();
+  microphone();
   rotaryEncoder();
 //  itTxRxSensors();
-  //  touchSensor();
+  touchSensor();
 //  radio();
 //  ldr();
 //  heartbeat();
@@ -282,7 +282,23 @@ void ultrasonic() {
   #ifdef DEMO
     if (DEMO) {
       if (distance < 100) {
-        rgLed2();
+        if (rotaryEncoderCLKRead != rotaryEncoderDataRead) {
+            if(val <= 245) {
+              val+=10;
+            }
+            else {
+              val = 0;
+            }
+          }
+          else {
+            if(val >= 10) {
+              val-=10;
+            }
+            else {
+              val = 0;
+            }
+          }
+          analogWrite(smdRedPin, val);
       }
       if (distance > 100) {
         //do nothing
@@ -374,13 +390,19 @@ void microphone() {
   #ifdef DEMO
     if (DEMO) {
       if (micTapped) {
-        rgLed2();
+        buzzerB();
       }
       if (!micTapped) {
         //do nothing
       }
     }
   #endif
+}
+
+void buzzerB() {
+  analogWrite(buzzerBPin, 255);
+  delay(200);
+  analogWrite(buzzerBPin, 0);
 }
 
 void rotaryEncoder() {
@@ -563,8 +585,6 @@ void touchSensor() {
   #endif
 }
 
-// radio tx
-// radio rx
 void radio() {
   const unsigned int upperThreshold = 80;  //upper threshold value
   const unsigned int lowerThreshold = 50;  //lower threshold value

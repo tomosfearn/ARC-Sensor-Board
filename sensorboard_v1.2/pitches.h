@@ -114,6 +114,6 @@ const int C_ARPEGGIO_NOTES[] = {
 };
 
 const int C_ARPEGGIO_DURATION[] = {
-  4, 4, 4, 4,
-  4, 4, 2
+  8, 8, 8, 8,
+  8, 8, 4
 };
