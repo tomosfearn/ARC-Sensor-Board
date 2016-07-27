@@ -22,7 +22,6 @@ void setup() {
   pinMode(touchPin, INPUT_PULLUP); //touch sensor
   //pinMode(radio_rxPin, INPUT); //radio receiver pin
   pinMode(ldrPin, INPUT); //light sensor
-  pinMode(heartBeatPin, INPUT); //heart beat sensor
   pinMode(infraRedRx, INPUT_PULLUP); //infra red receiver
   pinMode(tiltPin, INPUT_PULLUP); //tilt module
   pinMode(miniReedPin, INPUT); //mini reed module
@@ -52,6 +51,7 @@ void setup() {
   pinMode(rgb2LedRed, OUTPUT);
   pinMode(rgb2LedGreen, OUTPUT);
   pinMode(rgb2LedBlue, OUTPUT);
+  pinMode(greenLed, OUTPUT); //green LED
 }
 
 void loop() {
@@ -95,7 +95,7 @@ void mainProgram() {
   //ultrasonic();
   //irBlocking();
   //microphone();
-  //rotaryEncoder();
+  rotaryEncoder();
   //itTxRxSensors();
   touchSensor();
   //radio();
@@ -107,10 +107,14 @@ void mainProgram() {
   //button();
   //temperatureAndHumidity();
   //tapSensor();
-  //heled();
+//  heled();
   //output
   //buzzerA(1);
-  //rgb2LED();
+//  rgb2LED();
+//  for(int i = 0; i < 256; i++) {
+//    analogWrite(greenLed, i);
+//    delay(50);
+//  }
 }
 
 // temp and humidity - need to work out how to represent data
@@ -463,7 +467,7 @@ void rotaryEncoder() {
         buttonState = rotaryEncoderSwitchRead;
         if (buttonState == HIGH) {
           switchPressed = !switchPressed;
-          analogWrite(smdRedPin, 0);
+          analogWrite(greenLed, 0);
         }
       }
     }
@@ -473,8 +477,8 @@ void rotaryEncoder() {
       if (rotaryEncoderCLKRead > rotaryEncoderCLKReadLast) {
         if (rotaryEncoderCLKRead != rotaryEncoderDataRead) {
           //          Serial.println ("clockwise");
-          if (val <= 245) {
-            val += 10;
+          if (val <= 250) {
+            val += 5;
           }
           else {
             val = 0;
@@ -482,15 +486,14 @@ void rotaryEncoder() {
         }
         else {
           //          Serial.println ("counterclockwise");
-          if (val >= 10) {
-            val -= 10;
+          if (val >= 5) {
+            val -= 5;
           }
           else {
             val = 0;
           }
         }
-        Serial.println(ledCycle[whichLed]);
-        analogWrite(smdRedPin, val);
+        analogWrite(greenLed, val);
       }
       rotaryEncoderCLKReadLast = rotaryEncoderCLKRead;
     }
@@ -660,7 +663,7 @@ void ldr() {
 }
 
 void heartbeat() {
-  int heartbeatRead = analogRead(heartBeatPin);
+  int heartbeatRead = analogRead(greenLed);
 #ifdef DEBUG
   if (DEBUG) {
     Serial.println("Debug: Heartbeat Module...");

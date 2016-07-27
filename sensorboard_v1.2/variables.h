@@ -82,8 +82,8 @@ int radio1Pin = 46; // radio Rx; A5
 int radio0Pin = 44; // radio Tx 44
 int ldrPin = A0; // LDR
 
-// heartbeat
-int heartBeatPin = A1;
+// ex-heartbeat
+int greenLed = 6;
 double alpha = 0.75;
 int period = 100;
 double change = 0.0;

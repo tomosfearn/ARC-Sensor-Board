@@ -17,11 +17,11 @@ tomosfearn<br>
 |Ultrasound|TODO SMD RGB LED|
 |IR Blocking|TODO 2 Colour LED 1|
 |Microphone|Tap for Buzzer B tone|
-|Rotary Encoder|SMD RGB LED: turn red 0-255, press to turn off TODO change to modify the pulse of the green LED|
+|Rotary Encoder|Green LED: turn 0-255, press to turn on/off|
 |IR Tx and Rx||
 |Touch|RGB LED 2|
 |Radio Rx|TODO 2 Colour LED (heled)|
-|LDR||
+|LDR|TODO modify the pulse rate of the green LED|
 |Ball Switch||
 |Mini Reed|TODO 2 Colour LED 1 and RGB LED 2|
 |Joystick||
