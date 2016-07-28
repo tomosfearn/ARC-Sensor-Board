@@ -43,7 +43,9 @@ Input sensors (e.g. buttons, LDRs) take different kinds of data in, from the env
 Mae synwyryddion allbynno (e.e. DAGau, Swnyn) yn ffordd o dangos bod rhywbeth yn digwydd.<br>
 Output sensors (e.g. LEDs, buzzers) are a way of showing that something is happening.
 
-#####(Temperature & Humidity)
+#####Temperature and Humidity / Tymheredd a Lleithder
+Mae'r synhwyrydd yma yn mesur y tymheredd a lleithder yr aer o'i chwmpas.
+This is measuring the temperature and humidity of the air around it.
 
 #####Atal Golau / Light Blocking
 Mae golau is-goch (IG) yn teithio rhwng y bwlch, bydd y synhwyrydd yn canfod os ydych yn rhoi rhywbeth yn y bwlch i rwystro'r golau.<br>
