@@ -34,7 +34,7 @@ void setup() {
   pinMode(buttonPin, INPUT_PULLUP); //button module
   pinMode(radio0Pin, INPUT); //radio 0
   pinMode(radio1Pin, INPUT); //radio 1
-  pinMode(touchPin, INPUT); //capactive sensor
+  pinMode(whiteButtonPin, INPUT); //white button
 
   //Outputs
   pinMode(buzzerAPin, OUTPUT); //buzzer A
@@ -101,8 +101,8 @@ void mainProgram() {
   //  microphone();
   //  rotaryEncoder();
   //itTxRxSensors();
-  //  touchSensor();
-  //  radio();
+  //touchSensor();
+  //radio();
   //ldr();
   //heartbeat();
   //ballSwitch();
@@ -110,11 +110,11 @@ void mainProgram() {
   //joystick();
   //button();
   //temperatureAndHumidity();
-  tapSensor();
-  //  heled();
+  //whiteButton();
+  //heled();
   //output
   //buzzerA(1);
-  //  rgb2LED();
+  //rgb2LED();
 }
 
 // temp and humidity - need to work out how to represent data
@@ -1061,14 +1061,14 @@ void temperatureAndHumidity() {
   delay(2000);
 }
 
-void tapSensor() {
-  int touch = analogRead(touchPin);
-  Serial.println(touch);
-  if (touch > 300) {
-    digitalWrite(39, HIGH);
+void whiteButton() {
+  digitalWrite(whiteButtonPin, HIGH);
+  int whiteButtonValue = digitalRead(whiteButtonPin);
+  if (!whiteButtonValue) {
+    digitalWrite(sevenColFlashPin, HIGH);
   }
   else {
-    //do nothing
+    digitalWrite(sevenColFlashPin, LOW);
   }
 }
 

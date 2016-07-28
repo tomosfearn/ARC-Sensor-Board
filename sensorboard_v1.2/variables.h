@@ -52,7 +52,7 @@ int sevenColFlashPin = 39; // 7-col flash
 int smdRedPin = 5; //SMD red led
 int smdGreenPin = 4; //SMD green led
 int smdBluePin = 3; //SMD blue led
-int tapSensorPin = A6; //tap sensor
+int whiteButtonPin = 37; //tap sensor
 
 int ultrasonicTriggerPin = 34; //ultrasonic trigger
 int ultrasonicEchoPin = 36;  //ultrasonic echo

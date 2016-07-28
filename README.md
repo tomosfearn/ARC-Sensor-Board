@@ -45,7 +45,7 @@ Sensors are listed left to right, and split into row groups.
 | SMD LED Red | int smdRedPin | 5 |
 | SMD LED Green | int smdGreenPin | 4 |
 | SMD LED Blue | int smdBluePin | 3 |
-| Capacitive | int tapSensorPin | A6 |
+| WhiteButton | int whiteButtonPin | 37 |
 |---|---|
 | Ultrasonic Trig | int ultrasonicTriggerPin | 34 |
 | Ultrasonic Echo | int ultrasonicEchoPin | 36 |
