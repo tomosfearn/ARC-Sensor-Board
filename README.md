@@ -39,10 +39,12 @@ tomosfearn<br>
 | RGB LED Blue | int rgbLedGreenPin | 53 |
 | Reed Switch | int reedPin | 47 |
 | 7 Colour Flash | int sevenColFlashPin | 39 |
+|---|---|
 | SMD LED Red | int smdRedPin | 5 |
 | SMD LED Green | int smdGreenPin | 4 |
 | SMD LED Blue | int smdBluePin | 3 |
 | Capacitive | int tapSensorPin | A6 |
+|---|---|
 | Ultrasonic Trig | int ultrasonicTriggerPin | 34 |
 | Ultrasonic Echo | int ultrasonicEchoPin | 36 |
 | IR Blocking| int blockingPin | 27 |
@@ -54,24 +56,26 @@ tomosfearn<br>
 | Rotary Encoder, Switch | int rotaryEncoderSwitch | 38 |
 | Rotary Encoder, Data | int rotaryEncoderData | 40 |
 | Rotary Encoder, Clock | int rotaryEncoderCLK | 42 |
+|---|---|
 | IR Emitter | int infraRedTx | 30 |
 | Touch | int touchPin | 25 |
+| RGB LED 2 Green | int rgb2LedGreen | A5 |
+| RGB LED 2 Red | int rgb2LedRed | 50 |
+| RGB LED 2 Blue | int rgb2LedBlue | 48 |
 | Radio B Button | int radio1Pin | 46 |
 | Radio A Button | int radio0Pin | 44 |
 | LDR | int ldrPin | A0 |
 | Green LED | int greenLed | 6 |
+|---|---|
 | IR Receiver | int infraRedRx | 32 |
 | Ball Switch | int tiltPin | 23 |
 | Mini Reed | int miniReedPin | 24 |
 | RC LED Cyan |int heledCyan | 43 |
-| RC LED Red |int heledRed | 41 |
-| RGB LED 2 Green |int rgb2LedGreen | A5 |
-| RGB LED 2 Red |int rgb2LedRed | 50 |
-| RGB LED 2 Blue |int rgb2LedBlue | 48 |
-| Joystick, Button |int joyStickButtonPin | 33 |
-| Joystick, Y |int joyStickY | A2 |
-| Joystick, X |int joyStickX | A3 |
-| Button |int buttonPin | 35 |
+| RC LED Red | int heledRed | 41 |
+| Joystick, Button | int joyStickButtonPin | 33 |
+| Joystick, Y | int joyStickY | A2 |
+| Joystick, X | int joyStickX | A3 |
+| Button | int buttonPin | 35 |
 
 ## Board Text
 
