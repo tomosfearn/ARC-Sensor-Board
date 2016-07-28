@@ -17,14 +17,14 @@ tomosfearn<br>
 |Ultrasound|SMD RGB LED|Working|
 |IR Blocking|2 Colour LED 1|Working|
 |Microphone|Tap for Buzzer B tone|Working|
-|Rotary Encoder|Green LED: turn 0-255, press to turn on/off|Working|
+|Rotary Encoder|modify the pulse rate of the green LED|TODO|
 |IR Tx and Rx|||
 |Touch| RGB LED 2|NOT WORKING!|
 |Radio Rx|2 Colour LED (heled)|Working|Working|
-|LDR|modify the pulse rate of the green LED|TODO|
+|LDR|?|TODO|
 |Ball Switch|2 Colour LED 1 and RGB LED 2|Working|
 |Mini Reed|Dragon Pulse|Working|
-|Joystick|||
+|Joystick|Green LED: turn 0-255, press to turn on/off|TODO|
 |Button|All the LEDs!|Working|
 
 ## Pin Map
