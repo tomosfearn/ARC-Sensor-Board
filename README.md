@@ -20,7 +20,7 @@ tomosfearn<br>
 |Rotary Encoder|Green LED: turn 0-255, press to turn on/off|
 |IR Tx and Rx||
 |Touch|RGB LED 2|
-|Radio Rx|TODO 2 Colour LED (heled)|
+|Radio Rx|2 Colour LED (heled)|
 |LDR|TODO modify the pulse rate of the green LED|
 |Ball Switch||
 |Mini Reed|TODO 2 Colour LED 1 and RGB LED 2|

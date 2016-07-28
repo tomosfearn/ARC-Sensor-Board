@@ -98,7 +98,7 @@ void mainProgram() {
   rotaryEncoder();
   //itTxRxSensors();
   touchSensor();
-  //radio();
+  radio();
   //ldr();
   //heartbeat();
   //ballSwitch();
@@ -604,15 +604,15 @@ void radio() {
   Serial.println(radio0);
 
   if (radio0) {
-    digitalWrite(rgLedGreenPin, HIGH);
+    digitalWrite(heledCyan, HIGH);
     delay(500);
-    digitalWrite(rgLedGreenPin, LOW);
+    digitalWrite(heledCyan, LOW);
   }
 
   if (radio1) {
-    digitalWrite(rgLedRedPin, HIGH);
+    digitalWrite(heledRed, HIGH);
     delay(500);
-    digitalWrite(rgLedRedPin, LOW);
+    digitalWrite(heledRed, LOW);
   }
 
   if ((!radio0) && (!radio1)) {
