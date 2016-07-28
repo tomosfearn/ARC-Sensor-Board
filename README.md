@@ -23,7 +23,7 @@ tomosfearn<br>
 |Radio Rx|2 Colour LED (heled)|
 |LDR|TODO modify the pulse rate of the green LED|
 |Ball Switch||
-|Mini Reed|TODO 2 Colour LED 1 and RGB LED 2|
+|Mini Reed|2 Colour LED 1 and RGB LED 2|
 |Joystick||
 |Button|TODO All the LEDs!|
 

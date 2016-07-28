@@ -102,7 +102,7 @@ void mainProgram() {
   //ldr();
   //heartbeat();
   //ballSwitch();
-  //miniReedSensor();
+  miniReedSensor();
   //joystick();
   //button();
   //temperatureAndHumidity();
@@ -794,10 +794,11 @@ void miniReedSensor() {
 #endif
 #ifdef DEMO
   if (DEMO) {
-    if (reedActivated) {
-      smdLed(1);
-    }
     if (!reedActivated) {
+      rgLed1();
+      rgb2LED();
+    }
+    if (reedActivated) {
       //do nothing
     }
   }
