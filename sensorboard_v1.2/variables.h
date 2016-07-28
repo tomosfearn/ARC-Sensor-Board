@@ -39,7 +39,7 @@
 
 
 
-
+#define DHT11_PIN 22
 int temphumidity = 22; // temp & humidity
 int lightBlockingPin = 29; // light blocking
 int buzzerAPin = 2; // passive buzzer;
