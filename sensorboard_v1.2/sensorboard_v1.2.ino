@@ -94,12 +94,12 @@ void mainProgram() {
   //  spacer();
 
   //input
-  //  lightBlocking();
-  //  reedSensor();
+  //lightBlocking();
+  //reedSensor();
   //ultrasonic();
-  //  irBlocking();
-  //  microphone();
-  //  rotaryEncoder();
+  //irBlocking();
+  //microphone();
+  //rotaryEncoder();
   //itTxRxSensors();
   //touchSensor();
   //radio();
@@ -108,7 +108,7 @@ void mainProgram() {
   //ballSwitch();
   //miniReedSensor();
   //joystick();
-  //button();
+  button();
   //temperatureAndHumidity();
   //whiteButton();
   //heled();
@@ -174,7 +174,7 @@ void buzzerA(int song) {
         int noteDuration = 1000 / MARY_HAD_A_LITTLE_LAMB_DURATION[currentNote];
         tone(buzzerAPin, MARY_HAD_A_LITTLE_LAMB_NOTES[currentNote], noteDuration);
         delay(noteDuration * 1.30);
-        noTone(8);
+        noTone(2);
       }
     }
   }
@@ -186,9 +186,10 @@ void buzzerA(int song) {
         int noteDuration = 1000 / MARY_HAD_A_LITTLE_LAMB_DURATION[currentNote];
         tone(buzzerAPin, MARY_HAD_A_LITTLE_LAMB_NOTES[currentNote], noteDuration);
         delay(noteDuration * 1.30);
-        noTone(8);
+        noTone(2);
       }
     }
+
     else if (song == 2) {
       for (int currentNote = 0; currentNote < sizeof(C_ARPEGGIO_NOTES); currentNote++) {
         int noteDuration = 1000 / C_ARPEGGIO_DURATION[currentNote];
@@ -888,6 +889,7 @@ void joystick() {
 }
 
 void button() {
+  //digitalWrite(buttonPin, HIGH);
   int buttonPressed = digitalRead(buttonPin);
 #ifdef DEBUG
   if (DEBUG) {
@@ -922,10 +924,10 @@ void button() {
 #endif
 #ifdef DEMO
   if (DEMO) {
-    if (buttonPressed) {
+    if (!buttonPressed) {
       buzzerA(1);
     }
-    if (!buttonPressed) {
+    if (buttonPressed) {
       //do nothing
     }
   }
@@ -1070,3 +1072,5 @@ void whiteButton() {
     digitalWrite(sevenColFlashPin, LOW);
   }
 }
+
+
