@@ -74,11 +74,11 @@ void mainProgram() {
   itTxRxSensors();
   touchSensor();
   radio();
-  //ldr();
+  ldr();
   //heartbeat();
   ballSwitch();
   miniReedSensor();
-  //joystick();
+  joystick();
   button();
   whiteButton();
   
@@ -448,18 +448,18 @@ void rotaryEncoder() {
       if (rotaryEncoderSwitchRead != buttonState) {
         buttonState = rotaryEncoderSwitchRead;
         if (buttonState == HIGH) {
-          analogWrite(greenLed, 255);
+          analogWrite(dragonLeds, 255);
           delay(100);
-          analogWrite(greenLed, 0);
+          analogWrite(dragonLeds, 0);
         }
       }
     }
     lastButtonState = rotaryEncoderSwitchRead;
       rotaryEncoderCLKRead = digitalRead(rotaryEncoderCLK);
       if (rotaryEncoderCLKRead > rotaryEncoderCLKReadLast) {
-        analogWrite(greenLed, 255);
+        analogWrite(dragonLeds, 255);
         delay(100);
-        analogWrite(greenLed, 0);
+        analogWrite(dragonLeds, 0);
       }
       rotaryEncoderCLKReadLast = rotaryEncoderCLKRead;
   }
@@ -623,7 +623,11 @@ void ldr() {
 #endif
 #ifdef DEMO
   if (DEMO) {
-    Serial.println(ldrRead);
+    // green flash
+    analogWrite(greenLed, 255);
+    delay(ldrRead);
+    analogWrite(greenLed, 0);
+    delay(ldrRead);
   }
 #endif
 }
