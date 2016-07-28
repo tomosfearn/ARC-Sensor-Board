@@ -93,7 +93,7 @@ void mainProgram() {
   lightBlocking();
   reedSensor();
   //ultrasonic();
-  //irBlocking();
+  irBlocking();
   microphone();
   rotaryEncoder();
   //itTxRxSensors();
@@ -354,10 +354,10 @@ void irBlocking() {
 #endif
 #ifdef DEMO
   if (DEMO) {
-    if (irBlocked) {
-      heled();
-    }
     if (!irBlocked) {
+      rgLed1();
+    }
+    if (irBlocked) {
       //do nothing
     }
   }
@@ -968,7 +968,7 @@ void smdLed(int sequence) {
 #ifdef DEMO
   if (DEMO == true) {
     if (sequence == 1) {
-      for (int a = 0; a < 5; a++) {
+      for (int a = 0; a < 1; a++) {
         digitalWrite(smdRedPin, HIGH);
         delay(100);
         digitalWrite(smdRedPin, LOW);

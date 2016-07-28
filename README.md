@@ -15,7 +15,7 @@ tomosfearn<br>
 |Reed Switch|RGB LED 1|
 |Capacitive|TODO 7 Colour Flash|
 |Ultrasound|TODO SMD RGB LED|
-|IR Blocking|TODO 2 Colour LED 1|
+|IR Blocking|2 Colour LED 1|
 |Microphone|Tap for Buzzer B tone|
 |Rotary Encoder|Green LED: turn 0-255, press to turn on/off|
 |IR Tx and Rx||
