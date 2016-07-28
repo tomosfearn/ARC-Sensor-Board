@@ -90,11 +90,11 @@ void mainProgram() {
   //  spacer();
 
   //input
-  //lightBlocking();
-  //reedSensor();
+  lightBlocking();
+  reedSensor();
   //ultrasonic();
   //irBlocking();
-  //microphone();
+  microphone();
   rotaryEncoder();
   //itTxRxSensors();
   touchSensor();
@@ -237,7 +237,7 @@ void reedSensor() {
 #ifdef DEMO
   if (DEMO) {
     if (reedActivated) {
-      smdLed(1);
+      rgbLed();
     }
     if (!reedActivated) {
       //do nothing
@@ -982,6 +982,18 @@ void smdLed(int sequence) {
     }
   }
 #endif
+}
+
+void rgbLed() {
+  digitalWrite(rgbLedRedPin, HIGH);
+  delay(flash);
+  digitalWrite(rgbLedRedPin, LOW);
+  digitalWrite(rgbLedGreenPin, HIGH);
+  delay(flash);
+  digitalWrite(rgbLedGreenPin, LOW);
+  digitalWrite(rgbLedBluePin, HIGH);
+  delay(flash);
+  digitalWrite(rgbLedBluePin, LOW);
 }
 
 void rgb2LED() {
