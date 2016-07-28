@@ -448,7 +448,6 @@ void rotaryEncoder() {
       if (rotaryEncoderSwitchRead != buttonState) {
         buttonState = rotaryEncoderSwitchRead;
         if (buttonState == HIGH) {
-//          switchPressed = !switchPressed;
           analogWrite(greenLed, 255);
           delay(100);
           analogWrite(greenLed, 0);
@@ -456,31 +455,13 @@ void rotaryEncoder() {
       }
     }
     lastButtonState = rotaryEncoderSwitchRead;
-//    if (switchPressed) {
       rotaryEncoderCLKRead = digitalRead(rotaryEncoderCLK);
       if (rotaryEncoderCLKRead > rotaryEncoderCLKReadLast) {
-        if (rotaryEncoderCLKRead != rotaryEncoderDataRead) {
-                    Serial.println ("clockwise");
-          if (valRe <= 250) {
-            valRe += 5;
-          }
-          else {
-            valRe = 0;
-          }
-        }
-        else {
-                    Serial.println ("counterclockwise");
-          if (valRe >= 5) {
-            valRe -= 5;
-          }
-          else {
-            valRe = 0;
-          }
-        }
-        analogWrite(greenLed, valRe);
+        analogWrite(greenLed, 255);
+        delay(100);
+        analogWrite(greenLed, 0);
       }
       rotaryEncoderCLKReadLast = rotaryEncoderCLKRead;
-//    }
   }
 #endif
 }
