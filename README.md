@@ -17,7 +17,7 @@ tomosfearn<br>
 |Ultrasound|SMD RGB LED|Working|
 |IR Blocking|2 Colour LED 1|Working|
 |Microphone|Tap for Buzzer B tone|Working|
-|Rotary Encoder|Every turn click flashes the green LED; button makes green LED flash|TODO|
+|Rotary Encoder|Every turn click flashes the green LED; button makes green LED flash|Code written, needs checking|
 |IR Tx and Rx|SMD Seq 1|Working|
 |Touch| RGB LED 2|Working|
 |Radio Rx|2 Colour LED (heled)|Working|
