@@ -72,14 +72,14 @@ void mainProgram() {
   microphone();
   rotaryEncoder();
 //  itTxRxSensors();
-  touchSensor();
+//  touchSensor();
   radio();
   //ldr();
   //heartbeat();
   ballSwitch();
   miniReedSensor();
   //joystick();
-  //button();
+  button();
   whiteButton();
   
   //output
@@ -448,37 +448,40 @@ void rotaryEncoder() {
       if (rotaryEncoderSwitchRead != buttonState) {
         buttonState = rotaryEncoderSwitchRead;
         if (buttonState == HIGH) {
-          switchPressed = !switchPressed;
+//          switchPressed = !switchPressed;
+          analogWrite(greenLed, 255);
+          delay(100);
           analogWrite(greenLed, 0);
         }
       }
     }
     lastButtonState = rotaryEncoderSwitchRead;
-    if (switchPressed) {
+//    if (switchPressed) {
       rotaryEncoderCLKRead = digitalRead(rotaryEncoderCLK);
       if (rotaryEncoderCLKRead > rotaryEncoderCLKReadLast) {
         if (rotaryEncoderCLKRead != rotaryEncoderDataRead) {
-          //          Serial.println ("clockwise");
-          if (val <= 250) {
-            val += 5;
+                    Serial.println ("clockwise");
+          if (valRe <= 250) {
+            valRe += 5;
           }
           else {
-            val = 0;
+            valRe = 0;
           }
         }
         else {
-          //          Serial.println ("counterclockwise");
-          if (val >= 5) {
-            val -= 5;
+                    Serial.println ("counterclockwise");
+          if (valRe >= 5) {
+            valRe -= 5;
           }
           else {
-            val = 0;
+            valRe = 0;
           }
         }
-        analogWrite(greenLed, val);
+        analogWrite(greenLed, valRe);
+//        Serial.println(valRe);
       }
       rotaryEncoderCLKReadLast = rotaryEncoderCLKRead;
-    }
+//    }
   }
 #endif
 }
@@ -791,12 +794,12 @@ void miniReedSensor() {
   if (DEMO) {
     if (!reedActivated) {
       for (int i = 0; i < 256; i++) {
-        analogWrite(7, i);
+        analogWrite(dragonLeds, i);
         delay(5);
       }
     }
     if (reedActivated) {
-      analogWrite(7, 0);
+      analogWrite(dragonLeds, 0);
     }
   }
 #endif
@@ -909,10 +912,59 @@ void button() {
 #ifdef DEMO
   if (DEMO) {
     if (!buttonPressed) {
-      buzzerA(1);
+//      buzzerA(1);
+      // RGB1
+      digitalWrite(rgbLedRedPin, HIGH);
+      digitalWrite(rgbLedGreenPin, HIGH);
+      digitalWrite(rgbLedBluePin, HIGH);
+      // 7 col flash
+      digitalWrite(sevenColFlashPin, HIGH);
+      // SMD
+      digitalWrite(smdRedPin, HIGH);
+      digitalWrite(smdGreenPin, HIGH);
+      digitalWrite(smdBluePin, HIGH);
+      // 2 col RG
+      digitalWrite(rgLedRedPin, HIGH);
+      digitalWrite(rgLedGreenPin, HIGH);
+      // RGB2 
+      digitalWrite(rgb2LedRed, HIGH);
+      digitalWrite(rgb2LedGreen, HIGH);
+      digitalWrite(rgb2LedBlue, HIGH);
+      // green
+      digitalWrite(greenLed, HIGH);
+      // heled
+      digitalWrite(heledCyan, HIGH);
+      digitalWrite(heledRed, HIGH);
+      // DRAGON!
+      digitalWrite(dragonLeds, HIGH);
+      delay(500);
     }
     if (buttonPressed) {
-      //do nothing
+      //make sure they're all off
+      // RGB1
+      digitalWrite(rgbLedRedPin, LOW);
+      digitalWrite(rgbLedGreenPin, LOW);
+      digitalWrite(rgbLedBluePin, LOW);
+      // 7 col flash
+      digitalWrite(sevenColFlashPin, LOW);
+      // SMD
+      digitalWrite(smdRedPin, LOW);
+      digitalWrite(smdGreenPin, LOW);
+      digitalWrite(smdBluePin, LOW);
+      // 2 col RG
+      digitalWrite(rgLedRedPin, LOW);
+      digitalWrite(rgLedGreenPin, LOW);
+      // RGB2 
+      digitalWrite(rgb2LedRed, LOW);
+      analogWrite(rgb2LedGreen, 0);
+      digitalWrite(rgb2LedBlue, LOW);
+      // green
+//      analogWrite(greenLed, 0);
+      // heled
+      digitalWrite(heledCyan, LOW);
+      digitalWrite(heledRed, LOW);
+      // DRAGON!
+      analogWrite(dragonLeds, 0);
     }
   }
 #endif

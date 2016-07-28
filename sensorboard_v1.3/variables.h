@@ -72,7 +72,7 @@ int rotaryEncoderCLK = 42; //for generating interrupts using CLK signal
 long rotaryEncoderCLKReadLast = digitalRead(rotaryEncoderCLK);
 boolean switchPressed = false;
 int buttonState;
-double val = 0;
+double valRe = 0;
 int lastButtonState = LOW;
 long lastDebounceTime = 0;
 long debounceDelay = 50;
@@ -102,6 +102,8 @@ int joyStickButtonPin = 33;
 int joyStickY = A2;
 int joyStickX = A3; // joystick
 int buttonPin = 35; // button
+
+int dragonLeds = 7;
 
 String myChoise;
 int val1 = 0;

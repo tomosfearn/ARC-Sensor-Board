@@ -25,7 +25,7 @@ tomosfearn<br>
 |Ball Switch|2 Colour LED 1 and RGB LED 2|Working|
 |Mini Reed|Dragon Pulse|Working|
 |Joystick|||
-|Button|All the LEDs!|TODO|
+|Button|All the LEDs!|Working|
 
 ## Pin Map
 
