@@ -34,7 +34,7 @@ tomosfearn<br>
 Mae robotiaid yn defnyddio synhwyrydd i ddeall y byd o'u cwmpas. Mae'r bwrdd yma yn dangos gwahanol fathau o fewnbynnau ac allbynnau gallwch weld ar robotiaid.<br>
 Robots use sensors to understand the world around them. This board shows some of the different kinds of input and output sensors you might find on robots.
 
-Ceisiwch ddarganfod beth maent yn gwneud!
+Ceisiwch ddarganfod beth maent yn gwneud!<br>
 Can you work out what they all do?
 
 Mae synwyryddion mewnbynno (e.e. botymau, GADau) yn casglu gwahanol gyfryngau o ddata, o'r amgylchedd neu o ddefnyddwyr dynol.<br>
@@ -44,7 +44,7 @@ Mae synwyryddion allbynno (e.e. DAGau, Swnyn) yn ffordd o dangos bod rhywbeth yn
 Output sensors (e.g. LEDs, buzzers) are a way of showing that something is happening.
 
 #####Temperature and Humidity / Tymheredd a Lleithder
-Mae'r synhwyrydd yma yn mesur y tymheredd a lleithder yr aer o'i chwmpas.
+Mae'r synhwyrydd yma yn mesur y tymheredd a lleithder yr aer o'i chwmpas.<br>
 This is measuring the temperature and humidity of the air around it.
 
 #####Atal Golau / Light Blocking
