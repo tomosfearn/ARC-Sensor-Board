@@ -31,6 +31,7 @@ void setup() {
   pinMode(buttonPin, INPUT_PULLUP); //button module
   pinMode(radio0Pin, INPUT); //radio 0
   pinMode(radio1Pin, INPUT); //radio 1
+  pinMode(touchPin, INPUT); //capactive sensor
 
   //Outputs
   pinMode(buzzerAPin, OUTPUT); //buzzer A
@@ -90,23 +91,23 @@ void mainProgram() {
   //  spacer();
 
   //input
-//  lightBlocking();
-//  reedSensor();
-  ultrasonic();
-//  irBlocking();
-//  microphone();
-//  rotaryEncoder();
+  //  lightBlocking();
+  //  reedSensor();
+  //ultrasonic();
+  //  irBlocking();
+  //  microphone();
+  //  rotaryEncoder();
   //itTxRxSensors();
-//  touchSensor();
-//  radio();
+  //  touchSensor();
+  //  radio();
   //ldr();
   //heartbeat();
   //ballSwitch();
-  miniReedSensor();
+  //miniReedSensor();
   //joystick();
   //button();
   //temperatureAndHumidity();
-  //tapSensor();
+  tapSensor();
   //  heled();
   //output
   //buzzerA(1);
@@ -291,19 +292,19 @@ void ultrasonic() {
     if (distance < 60) {
       valRGB = 768 - (15 * distance);
       // update the colour values
-      if(valRGB <= 255) {
+      if (valRGB <= 255) {
         valR = valRGB;
       }
       else {
         valR = 0;
       }
-      if(valRGB > 255 && valRGB <= 512) {
+      if (valRGB > 255 && valRGB <= 512) {
         valG = valRGB - 255;
       }
       else {
         valG = 0;
       }
-      if(valRGB > 512 && valRGB <= 768) {
+      if (valRGB > 512 && valRGB <= 768) {
         valB = valRGB - (255 * 2);
       }
       else {
@@ -606,7 +607,7 @@ void radio() {
   bool radio1 = digitalRead(radio1Pin);
 
 
-//  Serial.println(radio0);
+  //  Serial.println(radio0);
 
   if (radio0) {
     digitalWrite(heledCyan, HIGH);
@@ -801,7 +802,7 @@ void miniReedSensor() {
 #ifdef DEMO
   if (DEMO) {
     if (!reedActivated) {
-      for(int i = 0; i < 256; i++) {
+      for (int i = 0; i < 256; i++) {
         analogWrite(7, i);
         delay(5);
       }
@@ -1017,17 +1018,23 @@ void rgb2LED() {
   digitalWrite(rgb2LedBlue, LOW);
 }
 
-/*
-  void temperatureAndHumidity() {
+
+void temperatureAndHumidity() {
   int temp = analogRead(temphumidity);
   Serial.println(temp);
-  }
+}
 
-  void tapSensor() {
-  int tapDetected = digitalRead(tapSensorPin);
-  Serial.println(tapDetected);
+void tapSensor() {
+  int touch = analogRead(touchPin);
+  Serial.println(touch);
+  if (touch > 300) {
+    digitalWrite(39, HIGH);
   }
-*/
+  else {
+    //do nothing
+  }
+}
+
 
 
 //shortcut methods

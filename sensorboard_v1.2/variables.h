@@ -78,7 +78,7 @@ long lastDebounceTime = 0;
 long debounceDelay = 50;
 
 int infraRedTx = 30; // IR Tx
-int touchPin = 25; // touch
+int touchPin = A6; // touch
 int radio1Pin = 46; // radio Rx; A5
 int radio0Pin = 44; // radio Tx 44
 int ldrPin = A0; // LDR
