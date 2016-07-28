@@ -13,7 +13,7 @@ tomosfearn<br>
 |Temperature and Humidity||
 |Light Blocking|Buzzer A Arpeggio|
 |Reed Switch|RGB LED 1|
-|Capacitive|TODO 7 Colour Flash|
+|White Button|7 Colour Flash|
 |Ultrasound|SMD RGB LED|
 |IR Blocking|2 Colour LED 1|
 |Microphone|Tap for Buzzer B tone|
