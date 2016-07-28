@@ -72,7 +72,7 @@ void mainProgram() {
   microphone();
   rotaryEncoder();
 //  itTxRxSensors();
-//  touchSensor();
+  touchSensor();
   radio();
   //ldr();
   //heartbeat();
@@ -478,7 +478,6 @@ void rotaryEncoder() {
           }
         }
         analogWrite(greenLed, valRe);
-//        Serial.println(valRe);
       }
       rotaryEncoderCLKReadLast = rotaryEncoderCLKRead;
 //    }
@@ -580,13 +579,11 @@ void touchSensor() {
 #endif
 #ifdef DEMO
   if (DEMO) {
-    if (!touchRead) {
-      rgb2LED();
-      Serial.println("on");
-    }
     if (touchRead) {
+      rgb2LED();
+    }
+    if (!touchRead) {
       //do nothing
-      Serial.println("off");
     }
   }
 #endif

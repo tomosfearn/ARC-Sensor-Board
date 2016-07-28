@@ -19,8 +19,8 @@ tomosfearn<br>
 |Microphone|Tap for Buzzer B tone|Working|
 |Rotary Encoder|modify the pulse rate of the green LED|TODO|
 |IR Tx and Rx|||
-|Touch| RGB LED 2|NOT WORKING!|
-|Radio Rx|2 Colour LED (heled)|Working|Working|
+|Touch| RGB LED 2|Working|
+|Radio Rx|2 Colour LED (heled)|Working|
 |LDR|?|TODO|
 |Ball Switch|2 Colour LED 1 and RGB LED 2|Working|
 |Mini Reed|Dragon Pulse|Working|
