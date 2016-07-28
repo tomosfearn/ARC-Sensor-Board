@@ -63,15 +63,16 @@ int micPin = 31; //microphone input
 int analogMicPin = A4; // microphone
 int buzzerBPin = 45; // active buzzer
 
+long distance = (pulseIn(ultrasonicEchoPin, HIGH)/29)/2;
+double valRGB = 0, valR = 0,  valG = 0,  valB = 0;
+
 int rotaryEncoderSwitch = 38;
 int rotaryEncoderData = 40;
 int rotaryEncoderCLK = 42; //for generating interrupts using CLK signal
 long rotaryEncoderCLKReadLast = digitalRead(rotaryEncoderCLK);
-double val = 0;
 boolean switchPressed = false;
-const int ledCycle[] = {0, smdRedPin, smdGreenPin, smdBluePin};
-int whichLed = 0;
 int buttonState;
+double val = 0;
 int lastButtonState = LOW;
 long lastDebounceTime = 0;
 long debounceDelay = 50;

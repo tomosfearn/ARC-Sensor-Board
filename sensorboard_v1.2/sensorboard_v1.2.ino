@@ -90,15 +90,15 @@ void mainProgram() {
   //  spacer();
 
   //input
-  lightBlocking();
-  reedSensor();
-  //ultrasonic();
-  irBlocking();
-  microphone();
-  rotaryEncoder();
+//  lightBlocking();
+//  reedSensor();
+  ultrasonic();
+//  irBlocking();
+//  microphone();
+//  rotaryEncoder();
   //itTxRxSensors();
-  touchSensor();
-  radio();
+//  touchSensor();
+//  radio();
   //ldr();
   //heartbeat();
   //ballSwitch();
@@ -107,14 +107,10 @@ void mainProgram() {
   //button();
   //temperatureAndHumidity();
   //tapSensor();
-//  heled();
+  //  heled();
   //output
   //buzzerA(1);
-//  rgb2LED();
-//  for(int i = 0; i < 256; i++) {
-//    analogWrite(greenLed, i);
-//    delay(50);
-//  }
+  //  rgb2LED();
 }
 
 // temp and humidity - need to work out how to represent data
@@ -245,8 +241,8 @@ void reedSensor() {
   }
 #endif
 }
-/*
-  void ultrasonic() {
+
+void ultrasonic() {
   // trigger ping
   digitalWrite(ultrasonicTriggerPin, HIGH);
   delay(10);
@@ -256,68 +252,77 @@ void reedSensor() {
   // The speed of sound is 340 m/s or 29 microseconds per centimeter.
   // The ping travels out and back, so to find the distance of the
   // object we take half of the distance travelled.
-  long distance = (ultrasonicRead/29)/2;
-
-  #ifdef DEBUG
-    if (DEBUG) {
-      Serial.println("Debug: Ultrasonic Module...");
-      for (int i = 10; i > 0; i--) {
-        if (ultrasonicRead) {
-          Serial.print("Ultrasonic Sensor is receiving data on ");
-          Serial.print(i);
-          Serial.println(" turn");
-          debugDelay();
-          success();
-          continue;
+  distance = (ultrasonicRead / 29) / 2;
+#ifdef DEBUG
+  if (DEBUG) {
+    Serial.println("Debug: Ultrasonic Module...");
+    for (int i = 10; i > 0; i--) {
+      if (ultrasonicRead) {
+        Serial.print("Ultrasonic Sensor is receiving data on ");
+        Serial.print(i);
+        Serial.println(" turn");
+        debugDelay();
+        success();
+        continue;
+      }
+      else {
+        if (i == 0) {
+          fail();
         }
         else {
-          if (i == 0) {
-            fail();
-          }
-          else {
-            Serial.print(i);
-            Serial.println(" turns left");
-            debugDelay();
-          }
+          Serial.print(i);
+          Serial.println(" turns left");
+          debugDelay();
         }
       }
     }
-  #endif
-  #ifdef RAW
-    if (RAW) {
-      Serial.println("RAW data from ultrasonic module is ");
-      Serial.println(ultrasonicRead);
-      debugDelay();
-    }
-  #endif
-  #ifdef DEMO
-    if (DEMO) {
-      if (distance < 100) {
-        if (rotaryEncoderCLKRead != rotaryEncoderDataRead) {
-            if(val <= 245) {
-              val+=10;
-            }
-            else {
-              val = 0;
-            }
-          }
-          else {
-            if(val >= 10) {
-              val-=10;
-            }
-            else {
-              val = 0;
-            }
-          }
-          analogWrite(smdRedPin, val);
-      }
-      if (distance > 100) {
-        //do nothing
-      }
-    }
-  #endif
   }
-*/
+#endif
+#ifdef RAW
+  if (RAW) {
+    Serial.println("RAW data from ultrasonic module is ");
+    Serial.println(ultrasonicRead);
+    debugDelay();
+  }
+#endif
+#ifdef DEMO
+  if (DEMO) {
+    distance = (ultrasonicRead / 29) / 2;
+    if (distance < 60) {
+      valRGB = 768 - (15 * distance);
+      // update the colour values
+      if(valRGB <= 255) {
+        valR = valRGB;
+      }
+      else {
+        valR = 0;
+      }
+      if(valRGB > 255 && valRGB <= 512) {
+        valG = valRGB - 255;
+      }
+      else {
+        valG = 0;
+      }
+      if(valRGB > 512 && valRGB <= 768) {
+        valB = valRGB - (255 * 2);
+      }
+      else {
+        valB = 0;
+      }
+      analogWrite(smdRedPin, valR);
+      analogWrite(smdGreenPin, valG);
+      analogWrite(smdBluePin, valB);
+    }
+    if (distance > 60) {
+      //do nothing
+      analogWrite(smdRedPin, 0);
+      analogWrite(smdGreenPin, 0);
+      analogWrite(smdBluePin, 0);
+    }
+  }
+#endif
+}
+
 void irBlocking() {
   int irBlocked = digitalRead(blockingPin);
 #ifdef DEBUG
@@ -601,7 +606,7 @@ void radio() {
   bool radio1 = digitalRead(radio1Pin);
 
 
-  Serial.println(radio0);
+//  Serial.println(radio0);
 
   if (radio0) {
     digitalWrite(heledCyan, HIGH);
@@ -750,7 +755,8 @@ void ballSwitch() {
 #ifdef DEMO
   if (DEMO) {
     if (ballRead) {
-      heled();
+      rgLed1();
+      rgb2LED();
     }
     if (!ballRead) {
       //do nothing
@@ -795,11 +801,13 @@ void miniReedSensor() {
 #ifdef DEMO
   if (DEMO) {
     if (!reedActivated) {
-      rgLed1();
-      rgb2LED();
+      for(int i = 0; i < 256; i++) {
+        analogWrite(7, i);
+        delay(5);
+      }
     }
     if (reedActivated) {
-      //do nothing
+      analogWrite(7, 0);
     }
   }
 #endif

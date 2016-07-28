@@ -14,7 +14,7 @@ tomosfearn<br>
 |Light Blocking|Buzzer A Arpeggio|
 |Reed Switch|RGB LED 1|
 |Capacitive|TODO 7 Colour Flash|
-|Ultrasound|TODO SMD RGB LED|
+|Ultrasound|SMD RGB LED|
 |IR Blocking|2 Colour LED 1|
 |Microphone|Tap for Buzzer B tone|
 |Rotary Encoder|Green LED: turn 0-255, press to turn on/off|
@@ -22,8 +22,8 @@ tomosfearn<br>
 |Touch|RGB LED 2|
 |Radio Rx|2 Colour LED (heled)|
 |LDR|TODO modify the pulse rate of the green LED|
-|Ball Switch||
-|Mini Reed|2 Colour LED 1 and RGB LED 2|
+|Ball Switch|2 Colour LED 1 and RGB LED 2|
+|Mini Reed|Dragon Pulse|
 |Joystick||
 |Button|TODO All the LEDs!|
 
