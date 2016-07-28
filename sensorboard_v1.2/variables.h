@@ -113,4 +113,28 @@ int testSeparation = 500;
 bool activateUltrasoundThing = false;
 const int flash = 100;
 
+//shortcut methods
+void spacer() {
+  Serial.println("-----------------------------------------------------");
+}
 
+void timedOut() {
+  Serial.println("Timed out");
+}
+
+void success() {
+  Serial.println("Success!!, passed debug program!!");
+  spacer();
+  //debugDelay();
+}
+
+void fail() {
+  Serial.println("Failure!!, failed the debug program!!");
+  Serial.println("Giving up and moving to next sensor!");
+  spacer();
+  //debugDelay();
+}
+
+void debugDelay() {
+  delay(500);
+}

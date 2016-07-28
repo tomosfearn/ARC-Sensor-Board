@@ -1021,7 +1021,6 @@ void rgb2LED() {
   digitalWrite(rgb2LedBlue, LOW);
 }
 
-
 void temperatureAndHumidity() {
   Serial.println("DHT TEST PROGRAM ");
   Serial.print("LIBRARY VERSION: ");
@@ -1071,32 +1070,3 @@ void whiteButton() {
     digitalWrite(sevenColFlashPin, LOW);
   }
 }
-
-
-
-//shortcut methods
-void spacer() {
-  Serial.println("-----------------------------------------------------");
-}
-
-void timedOut() {
-  Serial.println("Timed out");
-}
-
-void success() {
-  Serial.println("Success!!, passed debug program!!");
-  spacer();
-  debugDelay();
-}
-
-void fail() {
-  Serial.println("Failure!!, failed the debug program!!");
-  Serial.println("Giving up and moving to next sensor!");
-  spacer();
-  debugDelay();
-}
-
-void debugDelay() {
-  delay(500);
-}
-
