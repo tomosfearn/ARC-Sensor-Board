@@ -29,6 +29,8 @@ tomosfearn<br>
 
 ## Pin Map
 
+Sensors are listed left to right, and split into row groups.
+
 | Sensor | Variable | Pin |
 |:------:|:--------:|:---:|
 | Temp & Humidity | int temphumidity | 22|
