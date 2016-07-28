@@ -24,7 +24,7 @@ tomosfearn<br>
 |LDR|?|TODO|
 |Ball Switch|2 Colour LED 1 and RGB LED 2|Working|
 |Mini Reed|Dragon Pulse|Working|
-|Joystick|Green LED: turn 0-255, press to turn on/off|TODO|
+|Joystick|Cyan Red LED: u/d and l/r turns on the cyan and red leds, press to flash|Code written, needs checking|
 |Button|All the LEDs!|Working|
 
 ## Pin Map

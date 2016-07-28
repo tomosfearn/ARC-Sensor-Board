@@ -853,11 +853,25 @@ void joystick() {
 #endif
 #ifdef DEMO
   if (DEMO) {
-    if (joyStickButtonRead) {
-      heled();
+    // 0 <- 427 -> 856 CHECK THESE VALUES
+    // convert the js reads to a 0-255 range
+    double jsX = abs(joyStickXRead - 427)/1.67;
+    double jsY = abs(joyStickYRead - 427)/1.67;
+    if(jsX > 125) {
+      digitalWrite(heledCyan, HIGH); 
     }
-    if (!joyStickButtonRead) {
-      //do nothing
+    else {
+      digitalWrite(heledCyan, LOW); 
+    }
+    
+    if(jsY > 125) {
+      digitalWrite(heledRed, HIGH); 
+    }
+    else {
+      digitalWrite(heledRed, LOW);
+    }
+    if(joyStickButtonRead) {
+      heled();
     }
   }
 #endif

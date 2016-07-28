@@ -101,6 +101,7 @@ int rgb2LedBlue = 48;
 int joyStickButtonPin = 33;
 int joyStickY = A2;
 int joyStickX = A3; // joystick
+double valJs = 0;
 int buttonPin = 35; // button
 
 int dragonLeds = 7;
