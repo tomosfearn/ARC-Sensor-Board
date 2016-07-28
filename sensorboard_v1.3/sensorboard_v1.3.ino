@@ -64,25 +64,26 @@ void loop() {
 
 
 void mainProgram() {
+  //temperatureAndHumidity();
   lightBlocking();
   reedSensor();
   ultrasonic();
   irBlocking();
   microphone();
   rotaryEncoder();
-  itTxRxSensors();
-  //touchSensor();
+//  itTxRxSensors();
+  touchSensor();
   radio();
   //ldr();
   //heartbeat();
-  //ballSwitch();
-  //miniReedSensor();
+  ballSwitch();
+  miniReedSensor();
   //joystick();
   //button();
-  //temperatureAndHumidity();
-  //whiteButton();
-  //heled();
+  whiteButton();
+  
   //output
+  //heled();
   //buzzerA(1);
   //rgb2LED();
 }
@@ -742,11 +743,11 @@ void ballSwitch() {
 #endif
 #ifdef DEMO
   if (DEMO) {
-    if (ballRead) {
+    if (!ballRead) {
       rgLed1();
       rgb2LED();
     }
-    if (!ballRead) {
+    if (ballRead) {
       //do nothing
     }
   }

@@ -8,24 +8,24 @@ tomosfearn<br>
 
 ## Board Map
 
-| Input | Output |
-|:-----:|:------:|
-|Temperature and Humidity||
-|Light Blocking|Buzzer A Arpeggio|
-|Reed Switch|RGB LED 1|
-|White Button|7 Colour Flash|
-|Ultrasound|SMD RGB LED|
-|IR Blocking|2 Colour LED 1|
-|Microphone|Tap for Buzzer B tone|
-|Rotary Encoder|Green LED: turn 0-255, press to turn on/off|
-|IR Tx and Rx||
-|Touch|RGB LED 2|
-|Radio Rx|2 Colour LED (heled)|
-|LDR|TODO modify the pulse rate of the green LED|
-|Ball Switch|2 Colour LED 1 and RGB LED 2|
-|Mini Reed|Dragon Pulse|
-|Joystick||
-|Button|TODO All the LEDs!|
+| Input | Output | State |
+|:-----:|:------:|:-----:|
+|Temperature and Humidity|No Output||
+|Light Blocking|Buzzer A Arpeggio|Working|
+|Reed Switch|RGB LED 1|Working|
+|White Button|7 Colour Flash|Working|
+|Ultrasound|SMD RGB LED|Working|
+|IR Blocking|2 Colour LED 1|Working|
+|Microphone|Tap for Buzzer B tone|Working|
+|Rotary Encoder|Green LED: turn 0-255, press to turn on/off|Working|
+|IR Tx and Rx|||
+|Touch| RGB LED 2|NOT WORKING!|
+|Radio Rx|2 Colour LED (heled)|Working|Working|
+|LDR|modify the pulse rate of the green LED|TODO|
+|Ball Switch|2 Colour LED 1 and RGB LED 2|Working|
+|Mini Reed|Dragon Pulse|Working|
+|Joystick|||
+|Button|All the LEDs!|TODO|
 
 ## Pin Map
 
