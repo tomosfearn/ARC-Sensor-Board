@@ -71,7 +71,7 @@ void mainProgram() {
   irBlocking();
   microphone();
   rotaryEncoder();
-//  itTxRxSensors();
+  itTxRxSensors();
   touchSensor();
   radio();
   //ldr();
@@ -524,23 +524,14 @@ void itTxRxSensors() {
 #ifdef DEMO
   if (DEMO) {
     if (!irReceiver2) {
-      heled();
+//      heled();
+      smdLed(1);
     }
     if (irReceiver2) {
       //do nothing
     }
   }
 #endif
-#ifdef DEMO
-  if (DEMO) {
-    if (irReceiver2) {
-      digitalWrite(heledCyan, HIGH);
-    }
-    else {
-
-    }
-#endif
-  }
 }
 
 void touchSensor() {

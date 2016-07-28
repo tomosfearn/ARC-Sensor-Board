@@ -18,7 +18,7 @@ tomosfearn<br>
 |IR Blocking|2 Colour LED 1|Working|
 |Microphone|Tap for Buzzer B tone|Working|
 |Rotary Encoder|modify the pulse rate of the green LED|TODO|
-|IR Tx and Rx|||
+|IR Tx and Rx|SMD Seq 1|Working|
 |Touch| RGB LED 2|Working|
 |Radio Rx|2 Colour LED (heled)|Working|
 |LDR|?|TODO|
