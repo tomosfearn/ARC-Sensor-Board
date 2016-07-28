@@ -59,56 +59,26 @@ void setup() {
 }
 
 void loop() {
-  if (Serial.available()) {
-#ifdef DEBUG
-    if (DEBUG) {
-      myChoise = Serial.readString();
-      if (myChoise == "light blocking") {
-        lightBlocking();
-      }
-
-      if (myChoise == "reed sensor") {
-        reedSensor();
-      }
-
-      if (myChoise == "button") {
-        button();
-      }
-
-      if (myChoise == "buzzerA") {
-        buzzerA(1);
-      }
-    }
-#endif
-  }
-#ifdef RAW
   mainProgram();
-#endif
-#ifdef DEMO
-  mainProgram();
-#endif
 }
 
 
 void mainProgram() {
-  //  spacer();
-
-  //input
-  //lightBlocking();
-  //reedSensor();
-  //ultrasonic();
-  //irBlocking();
-  //microphone();
-  //rotaryEncoder();
-  //itTxRxSensors();
+  lightBlocking();
+  reedSensor();
+  ultrasonic();
+  irBlocking();
+  microphone();
+  rotaryEncoder();
+  itTxRxSensors();
   //touchSensor();
-  //radio();
+  radio();
   //ldr();
   //heartbeat();
   //ballSwitch();
   //miniReedSensor();
   //joystick();
-  button();
+  //button();
   //temperatureAndHumidity();
   //whiteButton();
   //heled();
@@ -157,6 +127,7 @@ void lightBlocking() {
   if (DEMO) {
     if (lightBlocked) {
       buzzerA(2);
+      noTone(buzzerAPin);
     }
     if (!lightBlocked) {
       //do nothing
@@ -186,7 +157,7 @@ void buzzerA(int song) {
         int noteDuration = 1000 / MARY_HAD_A_LITTLE_LAMB_DURATION[currentNote];
         tone(buzzerAPin, MARY_HAD_A_LITTLE_LAMB_NOTES[currentNote], noteDuration);
         delay(noteDuration * 1.30);
-        noTone(2);
+        noTone(buzzerAPin);
       }
     }
 
@@ -195,7 +166,7 @@ void buzzerA(int song) {
         int noteDuration = 1000 / C_ARPEGGIO_DURATION[currentNote];
         tone(buzzerAPin, C_ARPEGGIO_NOTES[currentNote], noteDuration);
         delay(noteDuration * 1.30);
-        noTone(8);
+        noTone(buzzerAPin);
       }
     }
 #endif
@@ -514,12 +485,12 @@ void rotaryEncoder() {
 void itTxRxSensors() {
   digitalWrite(infraRedTx, HIGH); // turn on the transmitter
 
-  int irReceiver = digitalRead(infraRedRx);
+  int irReceiver2 = digitalRead(infraRedRx);
 #ifdef DEBUG
   if (DEBUG) {
     Serial.println("Debug: IR Receiver Module...");
     for (int i = 10; i > 0; i--) {
-      if (irReceiver) {
+      if (irReceiver2) {
         Serial.print("IR has been blocked on ");
         Serial.print(i);
         Serial.println(" turn");
@@ -543,20 +514,30 @@ void itTxRxSensors() {
 #ifdef RAW
   if (RAW) {
     Serial.println("RAW data from IR receiver module is ");
-    Serial.println(irReceiver);
+    Serial.println(irReceiver2);
     debugDelay();
   }
 #endif
 #ifdef DEMO
   if (DEMO) {
-    if (irReceiver) {
+    if (!irReceiver2) {
       heled();
     }
-    if (!irReceiver) {
+    if (irReceiver2) {
       //do nothing
     }
   }
 #endif
+#ifdef DEMO
+  if (DEMO) {
+    if (irReceiver2) {
+      digitalWrite(heledCyan, HIGH);
+    }
+    else {
+
+    }
+#endif
+  }
 }
 
 void touchSensor() {
@@ -595,11 +576,13 @@ void touchSensor() {
 #endif
 #ifdef DEMO
   if (DEMO) {
-    if (touchRead) {
-      rgb2LED();
-    }
     if (!touchRead) {
+      rgb2LED();
+      Serial.println("on");
+    }
+    if (touchRead) {
       //do nothing
+      Serial.println("off");
     }
   }
 #endif
