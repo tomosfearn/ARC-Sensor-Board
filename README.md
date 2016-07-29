@@ -17,14 +17,14 @@ tomosfearn<br>
 |Ultrasound|SMD RGB LED|Working|
 |IR Blocking|2 Colour LED 1|Working|
 |Microphone|Tap for Buzzer B tone|Working|
-|Rotary Encoder|Every turn/button press flashes the dragon|Code written, needs checking|
+|Rotary Encoder|Every turn/button press flashes the dragon|Working|
 |IR Tx and Rx|SMD Seq 1|Working|
 |Touch| RGB LED 2|Working|
 |Radio Rx|2 Colour LED (heled)|Working|
 |LDR|Green LED flashes, delay based on the reading from the LDR|Code written, needs checking|
 |Ball Switch|2 Colour LED 1 and RGB LED 2|Working|
 |Mini Reed|Dragon Pulse|Working|
-|Joystick|Cyan Red LED: u/d and l/r turns on the cyan and red leds, press to flash|Code written, needs checking|
+|Joystick|Cyan Red LED: u/d and l/r turns on the cyan and red leds, press to flash|Working|
 |Button|All the LEDs!|Working|
 
 ## Pin Map

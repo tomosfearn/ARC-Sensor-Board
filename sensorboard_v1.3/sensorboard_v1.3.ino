@@ -74,7 +74,7 @@ void mainProgram() {
   itTxRxSensors();
   touchSensor();
   radio();
-  ldr();
+//  ldr();
   ballSwitch();
   miniReedSensor();
   joystick();
@@ -787,10 +787,10 @@ void joystick() {
 #endif
 #ifdef DEMO
   if (DEMO) {
-    // 0 <- 427 -> 856 CHECK THESE VALUES
+    // 0 <- 512 -> 1024 CHECK THESE VALUES
     // convert the js reads to a 0-255 range
-    double jsX = abs(joyStickXRead - 427)/1.67;
-    double jsY = abs(joyStickYRead - 427)/1.67;
+    double jsX = abs(joyStickXRead - 512)/2;
+    double jsY = abs(joyStickYRead - 512)/2;
     if(jsX > 125) {
       digitalWrite(heledCyan, HIGH); 
     }
@@ -804,7 +804,7 @@ void joystick() {
     else {
       digitalWrite(heledRed, LOW);
     }
-    if(joyStickButtonRead) {
+    if(!joyStickButtonRead) {
       heled();
     }
   }
