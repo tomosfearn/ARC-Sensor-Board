@@ -75,7 +75,6 @@ void mainProgram() {
   touchSensor();
   radio();
   ldr();
-  //heartbeat();
   ballSwitch();
   miniReedSensor();
   joystick();
@@ -632,56 +631,6 @@ void ldr() {
 #endif
 }
 
-void heartbeat() {
-  int heartbeatRead = analogRead(greenLed);
-#ifdef DEBUG
-  if (DEBUG) {
-    Serial.println("Debug: Heartbeat Module...");
-    for (int i = 10; i > 0; i--) {
-      if (heartbeatRead) {
-        Serial.print("Heartbeat Sensor is receiving data on ");
-        Serial.print(i);
-        Serial.println(" turn");
-        debugDelay();
-        success();
-        continue;
-      }
-      else {
-        if (i == 0) {
-          fail();
-        }
-        else {
-          Serial.print(i);
-          Serial.println(" turns left");
-          debugDelay();
-        }
-      }
-    }
-  }
-#endif
-#ifdef RAW
-  if (RAW) {
-    Serial.println("RAW data from heartbeat module is ");
-    Serial.println(heartbeatRead);
-    debugDelay();
-  }
-#endif
-#ifdef DEMO
-  if (DEMO) {
-    static double oldValue = 0;
-    static double oldChange = 0;
-
-    double value = alpha * oldValue + (1 - alpha) * heartbeatRead;
-
-    Serial.print (heartbeatRead);
-    Serial.print (",");
-    Serial.println (value);
-    oldValue = value;
-
-    delay (period);
-  }
-#endif
-}
 
 void ballSwitch() {
   int ballRead = digitalRead(tiltPin);
