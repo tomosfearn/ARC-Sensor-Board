@@ -624,9 +624,12 @@ void ldr() {
   if (DEMO) {
     // green flash
     analogWrite(greenLed, 255);
-    delay(ldrRead);
+    delay(ldrRead/2);
     analogWrite(greenLed, 0);
-    delay(ldrRead);
+    
+    Serial.print(ldrRead);
+    Serial.print(", ");
+    Serial.println(ldrRead/2);
   }
 #endif
 }
