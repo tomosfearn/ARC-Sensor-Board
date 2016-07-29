@@ -808,7 +808,10 @@ void joystick() {
       digitalWrite(heledRed, LOW);
     }
     if(!joyStickButtonRead) {
-      heled();
+//      heled();
+      analogWrite(greenLed, 255);
+      delay(10);
+      analogWrite(greenLed, 0);
     }
   }
 #endif
