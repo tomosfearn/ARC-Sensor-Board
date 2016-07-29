@@ -24,7 +24,7 @@ tomosfearn<br>
 |LDR|Green LED flashes, delay based on the reading from the LDR|Not working, leave for now...|
 |Ball Switch|2 Colour LED 1 and RGB LED 2|Working|
 |Mini Reed|Dragon Pulse|Working|
-|Joystick|Cyan Red LED: u/d and l/r turns on the cyan and red leds, press to flash|Working|
+|Joystick|Cyan Red LED: u/d and l/r turns on the cyan and red leds, press to flash gree LED|Working|
 |Button|All the LEDs!|Working|
 
 ## Pin Map
